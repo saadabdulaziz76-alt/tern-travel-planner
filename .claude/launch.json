@@ -1,0 +1,27 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "tern",
+      "runtimeExecutable": "backend/.venv/bin/uvicorn",
+      "runtimeArgs": [
+        "main:app",
+        "--port",
+        "8200",
+        "--app-dir",
+        "backend"
+      ],
+      "port": 8200
+    },
+    {
+      "name": "report",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8210"
+      ],
+      "port": 8210
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+TERN — DEMO RECORDING CUE SHEET
+Narration: walkthrough.m4a  (5 min 54 sec, male voice)
+
+SETUP
+  1. QuickTime Player -> File -> New Screen Recording
+  2. Options -> Microphone: None      (you want the file's audio, not the room)
+  3. Have http://localhost:8200/#/map open and already signed in (test1 / 12345678)
+  4. Press Record, then immediately play walkthrough.m4a
+
+Tip: one stop (Lisbon) is enough if you are short of time. The build takes
+about a minute, which the narration covers.
+
+  TIME   GO TO           WHAT TO DO
+  --------------------------------------------------------------------
+  0:00   #/map           Map — click a few countries, mark visited / want to go
+  0:35   #/map           Map — paint 2-3 more while he talks
+  0:57   #/insights      Insights — scroll slowly through tiles + carbon block
+  1:44   #/next          Where Next
+  1:52   #/getaways      Getaways — click "Hiking", then a transport chip
+  2:19   #/collections   National Parks — scroll, then click one park
+  2:38   #/heritage      Heritage — pick Italy, click a site
+  2:53   #/trip          Plan — show "Starting from"
+  3:11   #/trip          Plan — add Lisbon (and Madrid if there is time)
+  3:27   #/trip          Plan — tick the visa-free box
+  4:05   #/trip          Plan — press Build, then scroll the result
+  5:06   #/quiz          Quiz — press Start, answer one question
+  5:20   #/consultant    Consultant — ask "Is Georgia getting touristy?"
+  5:40   #/about         About — scroll to the bottom
+
+  Stop recording. QuickTime gives you an MP4.

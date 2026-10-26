@@ -1,0 +1,1125 @@
+/* ============================================================== TERN =====
+   Dark base, as the house style asks, but the accents are turned all the way
+   up: sunset amber, lagoon teal and sky violet, the three colours you actually
+   see when you travel. Every symbol on the site is SVG geometry, not an image.
+   ======================================================================== */
+:root{
+  /* night-ocean base */
+  --bg:#08090D;
+  --bg-2:#0C0E14;
+  --panel:#11131A;
+  --panel-2:#1A1D2650;
+  --card:#15171F;
+  --line:#2F3440;
+  --line-soft:#21242E;
+
+  --ink:#F4F6FA;
+  --dim:#A6ADBC;
+  --faint:#808897;         /* 4.9:1 on a card — captions stay readable */
+
+  /* depth, used by every card so the page reads in layers */
+  --lift:0 1px 0 #FFFFFF08 inset, 0 10px 28px -18px #000000CC;
+  --lift-hi:0 1px 0 #FFFFFF12 inset, 0 16px 40px -20px #000000E6;
+
+  --sea:#0A1322;           /* the ocean, so water reads as water */
+  --land:#243457;          /* unlabelled land */
+  --land-hi:#2E4068;
+
+  --amber:#FFAD36;         /* visited  — sunset */
+  --teal:#32D3BC;          /* lived    — lagoon */
+  --violet:#A596FF;        /* want     — dusk sky */
+  --coral:#FF6B6B;         /* warnings */
+
+  --amber-soft:#FFB23F22;
+  --teal-soft:#2DD4BF22;
+  --violet-soft:#9B8CFF22;
+
+  --brand:linear-gradient(118deg,#FFB23F 0%,#FF6B6B 52%,#9B8CFF 100%);
+  --ui:ui-sans-serif,-apple-system,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  --r:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{
+  background:var(--bg);color:var(--ink);overflow:hidden;
+  font:15px/1.6 var(--ui);
+  /* three soft auroras so the dark is atmospheric rather than flat */
+  background-image:
+    radial-gradient(900px 480px at 12% -8%, #FFB23F1A, transparent 60%),
+    radial-gradient(760px 420px at 92% 4%,  #9B8CFF1C, transparent 62%),
+    radial-gradient(1000px 540px at 50% 108%, #2DD4BF14, transparent 60%);
+  background-attachment:fixed;
+}
+.sprite{position:absolute;width:0;height:0;overflow:hidden}
+svg[class^="i"],svg.i{width:1em;height:1em;flex:0 0 auto;
+  fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.i.xl{width:46px;height:46px;stroke-width:1.2}
+[hidden]{display:none !important}
+a{color:inherit;text-decoration:none}
+
+/* ================================================================= nav === */
+.nav{
+  height:60px;display:flex;align-items:center;gap:26px;padding:0 20px;
+  border-bottom:1px solid var(--line-soft);
+  background:#070A12E6;backdrop-filter:blur(14px);position:relative;z-index:40;
+}
+/* a plane crossing a dotted great-circle, under the nav */
+.nav:after{
+  content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;
+  background:var(--brand);opacity:.5;
+}
+.brand{display:flex;align-items:center;gap:11px;flex:0 0 auto}
+.logo{width:34px;height:34px;flex:0 0 auto}
+.wordmark{display:flex;flex-direction:column;line-height:1}
+.wordmark b{font:800 17px/1 var(--ui);letter-spacing:.22em;
+  background:var(--brand);-webkit-background-clip:text;background-clip:text;color:transparent}
+.wordmark i{font-style:normal;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);margin-top:4px}
+
+.tabs{display:flex;gap:4px;margin-left:8px}
+.tab{
+  display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:999px;
+  font:600 13px/1 var(--ui);color:var(--dim);border:1px solid transparent;
+  transition:background .15s,color .15s,border-color .15s;
+}
+.tab svg{width:15px;height:15px}
+.tab:hover{color:var(--ink);background:#FFFFFF08}
+.tab.on{color:var(--ink);background:#FFFFFF0E;border-color:var(--line)}
+.tab.on svg{stroke:var(--amber)}
+
+/* The contextual second bar. Slim, quiet, and only present for the two groups
+   that hold more than one page. */
+.subnav{
+  display:flex;align-items:stretch;gap:2px;height:42px;padding:0 20px;
+  border-bottom:1px solid var(--line-soft);background:#070A12CC;
+  backdrop-filter:blur(14px);position:relative;z-index:39;
+}
+.subtab{
+  display:flex;align-items:center;gap:8px;padding:0 15px;position:relative;
+  font:600 12.5px/1 var(--ui);color:var(--faint);
+  transition:color .15s;
+}
+.subtab svg{width:14px;height:14px;flex:0 0 auto}
+.subtab .sh{
+  font-weight:500;font-size:11px;color:var(--line);
+  padding-left:9px;border-left:1px solid var(--line-soft);
+}
+.subtab:hover{color:var(--dim)}
+.subtab:hover .sh{color:var(--faint)}
+.subtab.on{color:var(--ink)}
+.subtab.on svg{stroke:var(--amber)}
+.subtab.on .sh{color:var(--faint)}
+/* the active marker rides the bottom edge, meeting the bar's own border */
+.subtab.on:after{
+  content:"";position:absolute;left:12px;right:12px;bottom:-1px;height:2px;
+  border-radius:2px 2px 0 0;background:var(--brand);
+}
+@media(max-width:900px){.subtab .sh{display:none}}
+
+/* the live readout, styled as a boarding-pass stub */
+.boarding{
+  margin-left:auto;display:flex;align-items:center;gap:12px;padding:7px 15px;
+  border:1px dashed var(--line);border-radius:10px;background:#FFFFFF05;
+}
+.boarding:hover{border-color:var(--amber);background:var(--amber-soft)}
+.bp{display:flex;flex-direction:column;line-height:1.15;text-align:center}
+.bp b{font:700 15px/1 var(--ui)}
+.bp i{font-style:normal;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:3px}
+.bpsep{color:var(--amber);display:flex}
+.bpsep svg{width:15px;height:15px}
+
+/* ================================================================ pages === */
+#main{height:calc(100vh - var(--chrome,60px));position:relative}
+.page{position:absolute;inset:0;display:grid;grid-template-columns:1fr 330px}
+.page[data-page="insights"],.page[data-page="next"],
+.page[data-page="trip"],.page[data-page="consultant"]{display:block}
+/* any scrolling page is full width — the two-column grid is the map's alone */
+.page.scrolls{display:block}
+.page.scrolls{overflow-y:auto}
+.wrap{max-width:980px;margin:0 auto;padding:30px 28px 70px}
+.wrap.narrow{max-width:680px}
+.ph{display:flex;align-items:center;gap:10px;font:700 25px/1.2 var(--ui);
+  letter-spacing:-.02em;margin:0 0 7px}
+.ph svg{width:22px;height:22px;stroke:var(--amber)}
+.psub{color:var(--dim);font-size:14px;margin:0 0 20px;max-width:62ch}
+
+/* ============================================================== 1 · map === */
+.stage{position:relative;display:flex;flex-direction:column;min-width:0;
+  min-height:0;overflow:hidden}
+.stagebar{padding:16px 24px 12px}
+.stagebar .ph{font-size:19px;margin-bottom:3px}
+.stagebar .psub{margin-bottom:11px;font-size:13px}
+.legend{display:flex;align-items:center;gap:15px;flex-wrap:wrap}
+.lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--dim)}
+.lg i{width:10px;height:10px;border-radius:3px;display:block}
+.lg.visited i{background:var(--amber);box-shadow:0 0 10px #FFB23F66}
+.lg.lived   i{background:var(--teal);box-shadow:0 0 10px #2DD4BF66}
+.lg.want    i{background:var(--violet);box-shadow:0 0 10px #9B8CFF66}
+.lg.nodata  i{background:repeating-linear-gradient(45deg,#24324C 0 2px,#0E1626 2px 4px);
+  border:1px solid #2A3A58;box-shadow:none}
+.ghost{appearance:none;border:1px solid var(--line);background:transparent;color:var(--faint);
+  border-radius:999px;padding:5px 12px;font:600 11.5px/1 var(--ui);cursor:pointer}
+.ghost:hover{color:var(--coral);border-color:var(--coral)}
+
+#map{flex:1;min-height:0;width:100%;display:block}
+#map .sea{fill:var(--sea)}
+#map .grat{fill:none;stroke:#22314C;stroke-width:.4px;opacity:.55}
+#map path.c{stroke:var(--bg);stroke-width:.4px;cursor:pointer;transition:fill .15s}
+#map path.c:hover{stroke:var(--ink);stroke-width:1px}
+#map path.nodata{cursor:not-allowed;opacity:.6}
+#map path.nodata:hover{stroke:var(--faint);stroke-width:.6px}
+.maphint{position:absolute;left:24px;bottom:14px;display:flex;align-items:center;gap:7px;
+  font-size:11.5px;color:var(--faint);pointer-events:none}
+.maphint svg{width:14px;height:14px;stroke:var(--teal)}
+
+/* right rail on the map page */
+.rail{background:var(--panel);border-left:1px solid var(--line-soft);
+  display:flex;flex-direction:column;min-height:0;padding:18px 20px}
+.rh{font:600 11px/1 var(--ui);letter-spacing:.15em;text-transform:uppercase;
+  color:var(--faint);margin:0 0 14px}
+.lists{display:flex;flex-direction:column;gap:14px;flex:1;overflow-y:auto;min-height:0}
+.lrow .tagname{display:flex;align-items:center;gap:6px;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--faint);margin-bottom:7px}
+.lrow .tagname i{width:7px;height:7px;border-radius:2px;display:block}
+.lrow.visited .tagname i{background:var(--amber)}
+.lrow.lived   .tagname i{background:var(--teal)}
+.lrow.want    .tagname i{background:var(--violet)}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{border-radius:5px;padding:2px;cursor:pointer;border:1px solid transparent;
+  display:inline-flex;line-height:0;transition:transform .12s}
+.chip .flag{margin:0;width:24px;height:16px;border-radius:3px}
+.chip:hover{border-color:currentColor;transform:translateY(-2px)}
+.chip.visited{background:var(--amber-soft);color:var(--amber)}
+.chip.lived  {background:var(--teal-soft);color:var(--teal)}
+.chip.want   {background:var(--violet-soft);color:var(--violet)}
+.lnone{color:var(--faint);font-size:11.5px}
+.railfoot{border-top:1px solid var(--line-soft);padding-top:14px;margin-top:14px}
+.minis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:11px}
+.mini{background:var(--card);border:1px solid var(--line-soft);border-radius:10px;padding:9px 11px}
+.mini b{display:block;font:700 18px/1 var(--ui)}
+.mini span{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+
+/* country popover */
+.picker{position:fixed;z-index:60;width:224px;padding:13px;border-radius:13px;
+  background:#0B1220F7;border:1px solid var(--line);
+  box-shadow:0 20px 56px #000A;backdrop-filter:blur(10px)}
+.pk-head{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.pk-name{font-weight:700;font-size:14.5px}
+.pk-stat{font-size:11.5px;color:var(--faint);margin-bottom:11px;line-height:1.45}
+.pk-row{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:6px}
+.pk{appearance:none;border:1px solid var(--line);background:#FFFFFF06;color:var(--dim);
+  border-radius:8px;padding:9px 4px;font:600 11.5px/1 var(--ui);cursor:pointer}
+.pk:hover{color:var(--ink)}
+.pk.on{color:#070A12;border-color:transparent}
+.pk.visited.on{background:var(--amber)}
+.pk.lived.on{background:var(--teal)}
+.pk.want.on{background:var(--violet)}
+.pk-clear{appearance:none;width:100%;border:0;background:transparent;color:var(--faint);
+  font:500 11.5px/1 var(--ui);padding:7px;cursor:pointer}
+.pk-clear:hover{color:var(--coral)}
+
+/* ========================================================= 2 · insights === */
+.verdictrow{display:flex;align-items:center;gap:26px;margin-bottom:26px;flex-wrap:wrap}
+/* a passport stamp: rotated, dashed, ink-coloured */
+.stamp{
+  flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:3px;
+  border:2.5px dashed var(--amber);color:var(--amber);border-radius:12px;
+  padding:14px 22px;transform:rotate(-6deg);background:var(--amber-soft);
+}
+.stamp svg{width:17px;height:17px;opacity:.75}
+.stamp b{font:800 25px/1.05 var(--ui);letter-spacing:-.01em;text-transform:uppercase}
+.stamp i{font-style:normal;font-size:8.5px;letter-spacing:.17em;text-transform:uppercase;opacity:.75}
+.stamp.traveler{border-color:var(--teal);color:var(--teal);background:var(--teal-soft)}
+.vtext{flex:1;min-width:260px}
+.vtext .psub{margin-bottom:0}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
+@media(max-width:820px){.stats{grid-template-columns:1fr 1fr}}
+.stat{background:var(--card);border:1px solid var(--line-soft);border-radius:var(--r);
+  padding:15px 16px;position:relative;overflow:hidden}
+.stat svg{width:16px;height:16px;stroke:var(--faint);margin-bottom:9px}
+.stat b{display:block;font:700 25px/1 var(--ui);letter-spacing:-.02em;margin-bottom:6px}
+.stat span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.stat.hero{border-color:#FFB23F55;background:
+  linear-gradient(145deg,#FFB23F18,#FF6B6B0A 60%,transparent),var(--card)}
+.stat.hero b{color:var(--amber)}
+.stat.hero svg{stroke:var(--amber)}
+
+/* flow-coverage meter with the tourist line marked */
+.meter{background:var(--card);border:1px solid var(--line-soft);border-radius:var(--r);
+  padding:16px 18px 14px;margin-bottom:20px}
+.mtop{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px}
+.mtop span{display:flex;align-items:center;gap:7px;font-size:12px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--faint)}
+.mtop span svg{width:14px;height:14px;stroke:var(--teal)}
+.mtop b{font:700 19px/1 var(--ui);color:var(--amber)}
+.mlede{margin:0 0 20px;font-size:14.5px;line-height:1.55;color:var(--ink);max-width:70ch}
+.mlede b{color:var(--amber);font-weight:700}
+.track{position:relative;height:10px;border-radius:999px;background:#0A111E;
+  border:1px solid var(--line-soft);margin-bottom:34px}
+/* The gradient ends in violet, which disappears against the background — the
+   bar looked shorter than it was. A bright cap makes the value unmistakable. */
+.fill{position:relative;height:100%;border-radius:999px;background:var(--brand);width:0;
+  transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.fill:after{content:"";position:absolute;right:-1px;top:-4px;bottom:-4px;width:4px;
+  border-radius:3px;background:var(--ink);box-shadow:0 0 10px #EEF2FAAA}
+.mark{position:absolute;top:-5px;bottom:-5px;width:1px;opacity:.85}
+.mark i{position:absolute;top:15px;font-style:normal;font-size:9.5px;letter-spacing:.06em;
+  white-space:nowrap;transform:translateX(-50%)}
+.mark.warn{background:var(--coral)}
+.mark.warn i{color:var(--coral)}
+.mark.top10{background:var(--teal)}
+.mark.top10 i{color:var(--teal);top:26px}
+.mnote{margin:0;font-size:12.5px;line-height:1.65;color:var(--dim);max-width:76ch}
+.mnote b{color:var(--teal);font-weight:700}
+
+.context{font-size:12.5px;color:var(--faint);line-height:1.65;margin-bottom:22px;max-width:78ch}
+.context b{color:var(--teal);font-weight:700}
+.context .src{display:inline-block;margin-top:7px;padding:3px 10px;border:1px dashed var(--line);
+  border-radius:999px;font-size:10.5px;color:var(--faint);cursor:help;white-space:nowrap}
+.context .src:hover{border-color:var(--violet);color:var(--violet)}
+.act{margin-bottom:18px}
+
+/* ============================================================= 3 · next === */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px}
+.lead{grid-column:1/-1;color:var(--dim);font-size:14px;margin:0 0 4px}
+.card{background:var(--card);border:1px solid var(--line-soft);border-radius:var(--r);
+  padding:16px 17px;transition:border-color .15s,transform .15s}
+.card:hover{border-color:var(--line);transform:translateY(-2px)}
+.card .name{display:flex;align-items:center;gap:9px;font-weight:700;font-size:15.5px;margin-bottom:8px}
+.card .rare{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--amber);
+  background:var(--amber-soft);border-radius:999px;padding:4px 10px;margin-bottom:10px}
+.card .rare svg{width:12px;height:12px}
+.card .why{font-size:13.5px;color:var(--dim)}
+.card .caution{display:flex;gap:7px;font-size:12px;color:var(--coral);margin-top:9px}
+
+/* ============================================================= 4 · trip === */
+.formcard{background:var(--card);border:1px solid var(--line-soft);border-radius:var(--r);padding:19px 20px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:12px}
+.fld{display:block}
+.fld span{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:6px}
+.inp{width:100%;background:#0A111E;border:1px solid var(--line);border-radius:9px;
+  padding:10px 12px;color:var(--ink);font:var(--ui);outline:none}
+.inp:focus{border-color:var(--amber);box-shadow:0 0 0 3px var(--amber-soft)}
+.wantline{font-size:12.5px;color:var(--faint);margin-bottom:12px}
+.wantline a{color:var(--violet)}
+.check{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--dim);margin-bottom:15px}
+.day{background:var(--card);border:1px solid var(--line-soft);border-radius:var(--r);
+  padding:14px 17px;margin-bottom:10px;position:relative;padding-left:48px}
+.day .n{position:absolute;left:15px;top:14px;width:22px;height:22px;border-radius:50%;
+  background:var(--amber-soft);border:1px solid #FFB23F55;color:var(--amber);
+  font:700 11px/22px var(--ui);text-align:center}
+.day .theme{font-weight:700;margin-bottom:7px}
+
+/* ======================================================= 5 · consultant === */
+.chatwrap{height:100%;max-width:800px;margin:0 auto;display:flex;flex-direction:column;
+  padding:22px 24px 0}
+.chatlog{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:11px;padding-bottom:16px}
+.bub{max-width:76%;padding:11px 15px;border-radius:15px;font-size:14px}
+.bub.me{align-self:flex-end;background:var(--brand);color:#070A12;font-weight:500;
+  border-bottom-right-radius:5px}
+.bub.them{align-self:flex-start;background:var(--card);border:1px solid var(--line-soft);
+  border-bottom-left-radius:5px}
+.bub.them b{color:var(--amber);font-weight:700}
+.ask{display:flex;align-items:center;gap:9px;padding:13px 0 18px;border-top:1px solid var(--line-soft)}
+.ask>svg{width:17px;height:17px;stroke:var(--faint)}
+.ask input{flex:1;background:var(--card);border:1px solid var(--line);border-radius:11px;
+  padding:11px 14px;color:var(--ink);font:var(--ui);outline:none}
+.ask input:focus{border-color:var(--amber);box-shadow:0 0 0 3px var(--amber-soft)}
+
+/* ============================================================== shared === */
+.btn{display:inline-flex;align-items:center;gap:8px;appearance:none;
+  border:1px solid var(--line);background:#FFFFFF06;color:var(--ink);border-radius:10px;
+  padding:10px 17px;font:600 13.5px/1 var(--ui);cursor:pointer;transition:transform .12s,filter .15s}
+.btn svg{width:15px;height:15px}
+.btn:hover{transform:translateY(-1px)}
+.btn:disabled{opacity:.4;cursor:default;transform:none}
+.btn.solid{background:var(--brand);color:#070A12;border-color:transparent;font-weight:700}
+.btn.solid:hover{filter:brightness(1.08)}
+.btn.wide{width:100%;justify-content:center}
+.btn.sm{padding:7px 12px;font-size:12px;margin-top:11px}
+
+.empty{text-align:center;padding:70px 20px;color:var(--faint)}
+.empty svg{stroke:var(--line);margin-bottom:14px}
+.empty p{margin:0 0 18px;font-size:15px}
+
+.obs{list-style:none;margin:14px 0 0;padding:0}
+.obs li{position:relative;padding-left:22px;margin-bottom:10px;font-size:14px;color:var(--dim)}
+.obs li:before{content:"";position:absolute;left:3px;top:8px;width:6px;height:6px;
+  border-radius:50%;background:var(--brand)}
+.readout{background:var(--card);border:1px solid var(--line-soft);border-radius:var(--r);
+  padding:17px 19px;margin-top:4px}
+.readout>p:first-child{margin-top:0;font-size:15px}
+.readout .peer{color:var(--faint);font-size:12.5px;border-top:1px solid var(--line-soft);
+  margin:15px 0 0;padding-top:12px}
+
+.tip{position:fixed;pointer-events:none;z-index:50;padding:9px 13px;border-radius:10px;
+  background:#070A12F2;border:1px solid var(--line);font-size:12.5px;opacity:0;
+  transition:opacity .1s;white-space:nowrap;box-shadow:0 10px 30px #0009}
+.tip .head{display:flex;align-items:center;gap:9px;margin-bottom:5px}
+.tip b{font-size:13.5px}
+.tip em{color:var(--faint);font-style:normal;white-space:normal;display:block;max-width:230px}
+.flag{width:26px;height:18px;border-radius:3px;object-fit:cover;flex:0 0 auto;
+  background:#0A111E;box-shadow:0 0 0 1px #FFFFFF18}
+.flag.big{width:36px;height:24px;border-radius:4px}
+.flag.sm{width:20px;height:14px;border-radius:2px}
+
+.thinking{display:flex;gap:5px;align-items:center;color:var(--faint);font-size:13px}
+.thinking i{width:6px;height:6px;border-radius:50%;background:var(--amber);animation:blip 1s infinite}
+.thinking i:nth-child(2){animation-delay:.15s;background:var(--coral)}
+.thinking i:nth-child(3){animation-delay:.3s;background:var(--violet)}
+@keyframes blip{0%,80%,100%{opacity:.2}40%{opacity:1}}
+.err{display:flex;gap:8px;color:var(--coral);font-size:13.5px;margin-top:10px}
+
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-thumb{background:#22304A;border-radius:9px}
+::-webkit-scrollbar-thumb:hover{background:#2E3F60}
+::-webkit-scrollbar-track{background:transparent}
+
+@media(max-width:1060px){
+  .page[data-page="map"]{grid-template-columns:1fr}
+  .rail{display:none}
+  .wordmark i{display:none}
+  .tab span{display:none}
+}
+
+/* ================================================================ auth === */
+.account{flex:0 0 auto}
+.acct{display:flex;align-items:center;gap:8px;border-radius:999px;padding:7px 14px;
+  font:600 12.5px/1 var(--ui);cursor:pointer;border:1px solid var(--line);
+  background:#FFFFFF06;color:var(--dim)}
+.acct svg{width:15px;height:15px}
+.acct.guest:hover{color:var(--ink);border-color:var(--amber);background:var(--amber-soft)}
+.acct.who{cursor:default;color:var(--teal);border-color:#2DD4BF55;background:var(--teal-soft);
+  padding-right:6px}
+.acct.who span{max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.signout{appearance:none;border:0;background:transparent;color:var(--faint);cursor:pointer;
+  display:flex;padding:4px;border-radius:7px}
+.signout svg{width:15px;height:15px}
+.signout:hover{color:var(--coral);background:#FF6B6B1A}
+
+.modal{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;
+  background:#04070Ddd;backdrop-filter:blur(6px);padding:20px}
+.authcard{position:relative;width:100%;max-width:390px;background:var(--panel);
+  border:1px solid var(--line);border-radius:18px;padding:26px 26px 20px;
+  box-shadow:0 30px 80px #000A}
+.authcard .x{position:absolute;top:12px;right:14px;appearance:none;border:0;background:transparent;
+  color:var(--faint);font-size:22px;line-height:1;cursor:pointer;padding:4px 8px;border-radius:8px}
+.authcard .x:hover{color:var(--ink);background:#FFFFFF0C}
+.authhead{display:flex;align-items:center;gap:13px;margin-bottom:19px}
+.authhead .logo{width:38px;height:38px;flex:0 0 auto}
+.authhead h2{font:700 18px/1.2 var(--ui);margin:0 0 4px}
+.authhead p{margin:0;font-size:12.5px;color:var(--faint)}
+
+.seg{display:flex;gap:4px;background:#0A111E;border:1px solid var(--line-soft);
+  border-radius:10px;padding:4px;margin-bottom:17px}
+.segb{flex:1;appearance:none;border:0;background:transparent;color:var(--dim);
+  border-radius:7px;padding:8px 6px;font:600 12.5px/1 var(--ui);cursor:pointer}
+.segb:hover{color:var(--ink)}
+.segb.on{background:#FFFFFF0E;color:var(--ink)}
+
+.authcard .fld{margin-bottom:13px}
+.autherr{display:flex;gap:8px;align-items:flex-start;background:#FF6B6B14;
+  border:1px solid #FF6B6B44;color:var(--coral);border-radius:9px;padding:9px 12px;
+  font-size:12.5px;margin-bottom:13px}
+.authnote{font-size:11.5px;color:var(--faint);text-align:center;margin:13px 0 0;line-height:1.6}
+.authnote b{color:var(--amber);font-weight:700}
+.authnote.carry{color:var(--teal)}
+
+/* guest nudge in the map rail */
+.nudge{display:flex;gap:9px;align-items:flex-start;position:relative;
+  background:var(--amber-soft);border:1px dashed #FFB23F55;border-radius:11px;
+  padding:11px 12px;margin-top:12px;font-size:11.5px;color:var(--dim);line-height:1.5}
+.nudge>svg{width:15px;height:15px;stroke:var(--amber);margin-top:1px}
+.nudge a{color:var(--amber);font-weight:600;text-decoration:underline;text-underline-offset:2px}
+.nudge .x{appearance:none;border:0;background:transparent;color:var(--faint);cursor:pointer;
+  font-size:16px;line-height:1;padding:0 2px;margin-left:auto}
+.nudge .x:hover{color:var(--ink)}
+.saved{display:flex;align-items:center;gap:6px;font-size:10.5px;color:var(--teal);
+  margin-top:10px;opacity:0;transition:opacity .3s}
+.saved.show{opacity:1}
+.saved svg{width:12px;height:12px}
+
+/* Countries with no polygon at any resolution we ship — drawn as dots so they
+   are still visible and still pinnable. */
+#map circle.dot{stroke:var(--bg);stroke-width:.6px;cursor:pointer;transition:fill .15s}
+#map circle.dot:hover{stroke:var(--ink);stroke-width:1.2px}
+
+/* shown only when a script error would otherwise leave a dead-looking page */
+#crash{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:200;
+  display:flex;align-items:center;gap:11px;max-width:min(680px,92vw);
+  background:#1A0F14;border:1px solid #FF6B6B66;color:#FFD9D9;border-radius:12px;
+  padding:12px 15px;font-size:12.5px;box-shadow:0 18px 50px #000A}
+#crash svg{width:17px;height:17px;stroke:var(--coral);flex:0 0 auto}
+#crash b{color:var(--coral)}
+#crash button{appearance:none;border:1px solid #FF6B6B66;background:#FF6B6B1A;
+  color:#FFD9D9;border-radius:8px;padding:6px 11px;font:600 12px/1 var(--ui);cursor:pointer}
+#crash button:hover{background:#FF6B6B33}
+
+/* group-size control on the Trip page */
+#t-band{margin-bottom:0}
+#t-band .segb{display:flex;flex-direction:column;gap:3px;padding:9px 6px}
+#t-band .segb i{font-style:normal;font-size:9.5px;letter-spacing:.06em;color:var(--faint)}
+#t-band .segb.on i{color:var(--amber)}
+.bandnote{margin:0;font-size:11.5px;line-height:1.5;color:var(--faint);
+  background:#0A111E;border:1px solid var(--line-soft);border-radius:9px;padding:9px 11px}
+
+/* territories pinned alongside the country count — shown only when non-zero,
+   because a pin on Hong Kong is a real place that is not a UN member state */
+.stat .plus{display:block;margin-top:7px;font-style:normal;font-size:10px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--teal)}
+
+/* Where Next — the want-list renders on arrival, so the page needs a proper
+   header block rather than a button and an empty void. */
+.lead{grid-column:1/-1;color:var(--ink);font-size:16px;line-height:1.55;margin:0 0 6px;max-width:72ch}
+.lead b{color:var(--amber);font-weight:700}
+.leadsub{color:var(--faint);font-size:12.5px;margin:0 0 4px;max-width:66ch}
+.card{position:relative}
+.card .facts{font-size:11.5px;color:var(--faint);margin-bottom:2px}
+.card .why{font-size:13.5px;color:var(--dim);margin-top:9px}
+.ribbon{position:absolute;top:13px;right:13px;display:inline-flex;align-items:center;gap:5px;
+  font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;font-weight:700;
+  color:#070A12;background:var(--brand);border-radius:999px;padding:4px 9px}
+.ribbon svg{width:11px;height:11px;stroke-width:2.2}
+
+/* home / passport control, sharing the account chip's language */
+.acct.trip{margin-left:auto;margin-right:-4px}
+.acct.trip:hover{color:var(--ink);border-color:var(--teal);background:var(--teal-soft)}
+.acct.trip.set{color:var(--teal);border-color:#2DD4BF44;background:var(--teal-soft)}
+.account{flex:0 0 auto;margin-left:10px}
+.authhead .i.xl{stroke:var(--amber);flex:0 0 auto}
+
+/* Insights is now three stacked sections rather than one wall of numbers. */
+.block{border-top:1px solid var(--line-soft);margin-top:30px;padding-top:24px}
+.bh{display:flex;align-items:center;gap:9px;font:600 11.5px/1 var(--ui);
+  letter-spacing:.15em;text-transform:uppercase;color:var(--faint);margin:0 0 16px}
+.bh svg{width:15px;height:15px;stroke:var(--teal)}
+.stats.four{grid-template-columns:repeat(4,1fr)}
+@media(max-width:820px){.stats.four{grid-template-columns:1fr 1fr}}
+
+.reachgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.rcard{background:var(--card);border:1px solid var(--line-soft);border-radius:var(--r);padding:14px 16px}
+.rcard h4{margin:0 0 4px;font:700 20px/1 var(--ui)}
+.rcard h4 em{font-style:normal;font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--faint);font-weight:600;margin-left:7px}
+.rcard .items{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+.pill{font-size:11px;padding:3px 9px;border-radius:999px;background:#FFFFFF08;
+  border:1px solid var(--line-soft);color:var(--dim)}
+.pill.more{color:var(--faint);border-style:dashed}
+
+.gapgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.gap{background:var(--card);border:1px solid var(--line-soft);border-radius:var(--r);padding:14px 16px}
+.gap h4{margin:0 0 10px;font:600 11px/1 var(--ui);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--faint)}
+.gap ul{list-style:none;margin:0;padding:0}
+.gap li{display:flex;justify-content:space-between;gap:10px;font-size:13px;
+  padding:5px 0;border-bottom:1px solid var(--line-soft);color:var(--dim)}
+.gap li:last-child{border:0}
+.gap li b{color:var(--ink);font-weight:600}
+.gap li span{color:var(--faint);font-size:11.5px;white-space:nowrap}
+.gap .bar{height:4px;border-radius:99px;background:#0A111E;margin-top:4px;overflow:hidden}
+.gap .bar i{display:block;height:100%;background:var(--brand)}
+
+/* Where Next filter chips — filters, not pages, so they stay on the card grid */
+.filters{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 18px}
+.chip-f{display:inline-flex;align-items:center;gap:7px;appearance:none;cursor:pointer;
+  border:1px solid var(--line);background:#FFFFFF06;color:var(--dim);
+  border-radius:999px;padding:7px 13px;font:600 12px/1 var(--ui)}
+.chip-f svg{width:13px;height:13px}
+.chip-f:hover{color:var(--ink)}
+.chip-f.on{background:var(--teal-soft);border-color:#2DD4BF55;color:var(--teal)}
+.chip-f[disabled]{opacity:.35;cursor:not-allowed}
+.card .meta{display:flex;flex-wrap:wrap;gap:6px;margin:9px 0 2px}
+.tagx{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;padding:3px 8px;
+  border-radius:999px;border:1px solid var(--line-soft);color:var(--faint);background:#FFFFFF05}
+.tagx svg{width:11px;height:11px}
+.tagx.ok{color:var(--teal);border-color:#2DD4BF44;background:var(--teal-soft)}
+.tagx.warn{color:var(--coral);border-color:#FF6B6B44}
+.tagx.sun{color:var(--amber);border-color:#FFB23F44;background:var(--amber-soft)}
+.weathernote{font-size:10.5px;color:var(--faint);margin-top:9px;font-style:italic}
+
+/* trip: route plan and country context */
+.routecard{background:var(--card);border:1px solid var(--line-soft);border-radius:var(--r);
+  padding:16px 18px;margin-bottom:14px}
+.routecard .bh{margin-bottom:12px}
+.routeline{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-bottom:11px}
+.hop{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;padding:5px 11px;
+  border-radius:999px;background:#FFFFFF07;border:1px solid var(--line-soft);color:var(--ink)}
+.hop.home{background:var(--teal-soft);border-color:#2DD4BF44;color:var(--teal)}
+.arrow{color:var(--faint);font-size:11px}
+.routestats{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--faint)}
+.routestats b{color:var(--amber);font-weight:700}
+.ctxcard{background:var(--card);border:1px solid var(--line-soft);border-radius:var(--r);
+  padding:14px 17px;margin-top:14px;display:flex;flex-wrap:wrap;gap:10px}
+
+/* year on a pin, and the timeline that plays the map filling in */
+.pk-year{display:flex;align-items:center;gap:9px;margin:8px 0 2px}
+.pk-year span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.pk-year .inp{padding:6px 9px;font-size:12.5px}
+.timeline{position:absolute;left:24px;right:24px;bottom:40px;display:flex;align-items:center;
+  gap:12px;background:#0B1220E8;border:1px solid var(--line);border-radius:12px;
+  padding:9px 14px;backdrop-filter:blur(8px)}
+.timeline input[type=range]{flex:1;accent-color:#FFB23F;height:3px}
+.tlabel{display:flex;flex-direction:column;line-height:1.15;min-width:78px;text-align:right}
+.tlabel b{font:700 15px/1 var(--ui);color:var(--amber)}
+.tlabel span{font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-top:3px}
+.tplay{appearance:none;border:1px solid var(--line);background:#FFFFFF06;color:var(--amber);
+  border-radius:9px;padding:6px 9px;cursor:pointer;display:flex}
+.tplay svg{width:14px;height:14px}
+.tplay:hover{border-color:var(--amber);background:var(--amber-soft)}
+.maphint{bottom:14px}
+
+/* a refused message, and a figure the tools could not confirm */
+.bub.blocked{border-color:#FF6B6B55;background:#1A0F14}
+.bub.blocked .shield{display:flex;align-items:center;gap:7px;font-size:10px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--coral);
+  font-weight:700;margin-bottom:7px}
+.bub.blocked .shield svg{width:12px;height:12px}
+/* out of scope, not unsafe: the same shape, without the alarm */
+.bub.offtopic{border-color:var(--line);background:#0C1119}
+.bub.offtopic .shield{display:flex;align-items:center;gap:7px;font-size:10px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
+  font-weight:700;margin-bottom:7px}
+.bub.offtopic .shield svg{width:12px;height:12px;stroke:var(--faint)}
+.unverified{display:flex;gap:8px;align-items:flex-start;margin-top:9px;padding:8px 11px;
+  border:1px dashed #FFB23F66;background:var(--amber-soft);border-radius:9px;
+  font-size:11.5px;color:var(--amber)}
+.unverified svg{width:13px;height:13px;flex:0 0 auto;margin-top:1px}
+
+/* city autocomplete in the home picker */
+.fld.combo{position:relative}
+.fld .hint{display:block;font-style:normal;font-size:11px;color:var(--faint);margin-top:6px}
+.suggest{position:absolute;left:0;right:0;top:100%;z-index:20;margin-top:4px;
+  background:#0B1220F7;border:1px solid var(--line);border-radius:10px;
+  max-height:168px;overflow-y:auto;box-shadow:0 18px 40px #000A;backdrop-filter:blur(8px)}
+.suggest button{display:flex;justify-content:space-between;gap:10px;width:100%;
+  appearance:none;border:0;background:transparent;color:var(--ink);cursor:pointer;
+  padding:9px 12px;font:500 13px/1.3 var(--ui);text-align:left}
+.suggest button:hover,.suggest button.on{background:var(--amber-soft);color:var(--amber)}
+/* `.fld span` is uppercase for field labels; the suggestion list sits inside a
+   .fld and was inheriting it, shouting every city name. */
+.suggest button span{text-transform:none;letter-spacing:0;font-size:13px;
+  color:inherit;display:inline;margin:0;font-weight:500}
+.suggest button i{font-style:normal;font-size:11px;color:var(--faint);white-space:nowrap;
+  text-transform:none;letter-spacing:0}
+.suggest button:hover i,.suggest button.on i{color:var(--amber)}
+.suggest .none{padding:10px 12px;font-size:12px;color:var(--faint)}
+
+/* visa status for a chosen trip country */
+.visabox{display:flex;gap:11px;align-items:flex-start;border-radius:11px;padding:12px 14px;
+  margin-bottom:13px;font-size:12.5px;line-height:1.5}
+.visabox svg{width:16px;height:16px;flex:0 0 auto;margin-top:1px}
+.visabox b{display:block;font-size:13.5px;margin-bottom:3px}
+.visabox span{color:var(--dim)}
+.visabox.need{background:#1A0F14;border:1px solid #FF6B6B66;color:var(--coral)}
+.visabox.need svg{stroke:var(--coral)}
+.visabox.ok{background:var(--teal-soft);border:1px solid #2DD4BF44;color:var(--teal)}
+.visabox.ok svg{stroke:var(--teal)}
+/* A reminder, not a refusal and not a warning about this trip — amber, so it
+   reads as something to go and check rather than something already wrong. */
+.studentbox{display:flex;gap:11px;align-items:flex-start;border-radius:11px;
+  padding:12px 14px;margin-bottom:13px;font-size:12.5px;line-height:1.55;
+  background:var(--amber-soft);border:1px dashed #FFB23F66}
+.studentbox svg{width:16px;height:16px;flex:0 0 auto;margin-top:1px;stroke:var(--amber)}
+.studentbox b{color:var(--ink)}
+.studentbox > div > b{display:block;font-size:13.5px;margin-bottom:4px;color:var(--amber)}
+.studentbox span{display:block;color:var(--dim)}
+
+/* weekend getaway */
+.wkbar{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;margin-bottom:20px}
+.wkcard{background:var(--card);border:1px solid var(--line-soft);border-radius:var(--r);
+  padding:15px 17px;position:relative}
+.wkcard .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.wkcard h4{margin:0;font:700 15.5px/1.25 var(--ui)}
+.wkcard h4 em{display:block;font-style:normal;font-size:11.5px;color:var(--faint);
+  font-weight:500;margin-top:3px}
+.wkcard .dist{font:700 14px/1 var(--ui);color:var(--amber);white-space:nowrap}
+.modes{display:flex;flex-wrap:wrap;gap:5px;margin-top:11px}
+.mode{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:4px 9px;
+  border-radius:999px;background:#FFFFFF07;border:1px solid var(--line-soft);color:var(--dim)}
+.mode.drive{color:var(--teal);border-color:#2DD4BF33}
+.mode.train{color:var(--violet);border-color:#9B8CFF33}
+.mode.fly{color:var(--amber);border-color:#FFB23F33}
+.wkcard .why{font-size:13px;color:var(--dim);margin-top:11px}
+.wkcard .vwarn{display:flex;gap:7px;align-items:flex-start;margin-top:10px;font-size:11.5px;
+  color:var(--coral);background:#FF6B6B12;border:1px solid #FF6B6B40;
+  border-radius:8px;padding:7px 10px}
+.wkcard .vwarn svg{width:12px;height:12px;flex:0 0 auto;margin-top:1px}
+
+
+/* theme chooser on the Getaways page */
+.themes{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 18px}
+.theme{display:inline-flex;align-items:center;gap:7px;appearance:none;cursor:pointer;
+  border:1px solid var(--line);background:#FFFFFF06;color:var(--dim);
+  border-radius:999px;padding:8px 14px;font:600 12.5px/1 var(--ui)}
+.theme svg{width:14px;height:14px}
+.theme:hover{color:var(--ink)}
+.theme.on{background:var(--brand);color:#070A12;border-color:transparent;font-weight:700}
+.theme.on svg{stroke:#070A12}
+.topright{display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex:0 0 auto}
+.fit{font-size:9.5px;letter-spacing:.08em;white-space:nowrap;
+  text-transform:uppercase;font-weight:700;padding:3px 8px;border-radius:999px}
+.fit.good{background:var(--brand);color:#070A12}
+.fit.ok{background:#FFFFFF10;color:var(--dim);border:1px solid var(--line-soft)}
+.wkcard.poor{opacity:.55}
+.wkcard.poor .fit{background:transparent;color:var(--faint);border:1px dashed var(--line)}
+
+/* Four groups, and they must all be readable at every width.
+
+   Nothing in the nav is allowed to clip: the pieces give way in a deliberate
+   order as space runs out — the wordmark, then tab padding, then the boarding
+   pass, then the tab icons. The thresholds are lower than they were, because
+   four tabs need far less room than the seven this ladder was first cut for;
+   leaving them high hid the wordmark on screens that had space to spare. */
+.nav{gap:16px}
+.tabs{flex:0 0 auto;min-width:0;overflow:visible}
+.tab{white-space:nowrap;flex:0 0 auto}
+.acct span{max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.acct.trip{min-width:0}
+.boarding{flex:0 0 auto}
+
+/* Re-cut for six groups. Four needed ~1,240px of chrome and six need ~1,350,
+   so every threshold moves up by roughly that difference; leaving them where
+   four tabs had put them overflowed the bar at 1200. */
+@media(max-width:1420px){ .wordmark{display:none} }
+@media(max-width:1280px){
+  .nav{gap:12px;padding:0 14px}
+  .tab{padding:8px 11px;gap:6px}
+  .acct span{max-width:132px}
+}
+@media(max-width:1130px){
+  .boarding{display:none}
+  .tab{padding:7px 10px}
+}
+@media(max-width:940px){
+  /* labels matter more than decoration when it is this tight */
+  .tab svg{display:none}
+  .tab{padding:7px 9px;font-size:12.5px}
+  .acct svg{display:none}
+  .acct span{max-width:96px}
+}
+@media(max-width:780px){
+  .tabs{gap:1px}
+  .tab{padding:6px 7px;font-size:12px}
+  .acct.trip{display:none}
+}
+
+/* transport detail, and the two-day plan */
+.mode{cursor:pointer}
+.mode:hover{border-color:currentColor}
+.mode.open{background:#FFFFFF12}
+.modedetail{margin-top:10px;border:1px solid var(--line-soft);border-radius:10px;
+  background:#0A111E;padding:11px 13px}
+.modedetail .hrs{display:flex;align-items:baseline;gap:9px;margin-bottom:6px}
+.modedetail .hrs b{font:700 15px/1 var(--ui);color:var(--amber)}
+.modedetail .hrs span{font-size:10px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--faint)}
+.modedetail p{margin:0;font-size:12px;color:var(--dim);line-height:1.5}
+.modedetail .basis{margin-top:7px;font-size:10.5px;color:var(--faint);font-style:italic}
+.wkcard .plan{margin-top:12px}
+.plancard{position:relative;width:100%;max-width:720px;max-height:86vh;overflow-y:auto;
+  background:var(--panel);border:1px solid var(--line);border-radius:18px;
+  padding:26px 28px;box-shadow:0 30px 80px #000A}
+.plancard .x{position:absolute;top:12px;right:16px;appearance:none;border:0;
+  background:transparent;color:var(--faint);font-size:24px;cursor:pointer}
+.plancard .x:hover{color:var(--ink)}
+.plancard h2{font:700 22px/1.2 var(--ui);margin:0 0 4px}
+.plancard .sub{color:var(--faint);font-size:12.5px;margin:0 0 16px}
+.planleg{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;
+  background:var(--amber-soft);border:1px solid #FFB23F44;color:var(--amber);
+  border-radius:999px;padding:4px 11px;margin-bottom:16px}
+.planleg svg{width:12px;height:12px}
+
+/* multi-stop trip builder */
+.stopadd{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end;
+  margin-bottom:14px}
+.stopadd .fld{margin:0}
+.stopadd .btn{height:40px}
+@media(max-width:700px){.stopadd{grid-template-columns:1fr}}
+.stoplist{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.stop{display:flex;align-items:center;gap:11px;background:var(--card);
+  border:1px solid var(--line-soft);border-radius:11px;padding:10px 12px}
+.stop .num{width:22px;height:22px;flex:0 0 auto;border-radius:50%;
+  background:var(--amber-soft);border:1px solid #FFB23F55;color:var(--amber);
+  font:700 11px/22px var(--ui);text-align:center}
+.stop .who{flex:1;min-width:0}
+.stop .who b{display:block;font-size:13.5px;font-weight:650}
+.stop .who span{font-size:11px;color:var(--faint)}
+.stop .leg{font-size:11px;color:var(--amber);white-space:nowrap}
+.stop .kill{appearance:none;border:0;background:transparent;color:var(--faint);
+  cursor:pointer;font-size:17px;line-height:1;padding:2px 5px;border-radius:7px}
+.stop .kill:hover{color:var(--coral);background:#FF6B6B1A}
+.stop .move{appearance:none;border:1px solid var(--line-soft);background:transparent;
+  color:var(--faint);cursor:pointer;border-radius:6px;width:20px;height:18px;
+  font:700 10px/1 var(--ui);padding:0}
+.stop .move:hover{color:var(--ink);border-color:var(--dim)}
+.stopnone{color:var(--faint);font-size:12.5px;padding:12px;border:1px dashed var(--line);
+  border-radius:11px;text-align:center}
+.routebar{display:flex;flex-wrap:wrap;gap:14px;align-items:center;font-size:12px;
+  color:var(--faint);margin-bottom:14px}
+.routebar b{color:var(--amber);font-weight:700}
+.routebar .pill2{border:1px solid var(--line-soft);border-radius:999px;padding:4px 11px}
+
+/* collections: the park grid and its detail sheet */
+.parkgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.park{background:var(--card);border:1px solid var(--line-soft);border-radius:var(--r);
+  overflow:hidden;cursor:pointer;transition:transform .15s,border-color .15s;text-align:left;
+  appearance:none;padding:0;color:inherit;font:inherit;display:block;width:100%}
+.park:hover{transform:translateY(-3px);border-color:var(--amber)}
+.park .shot{position:relative;aspect-ratio:3/2;background:#0A111E;overflow:hidden}
+.park .shot img{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .4s}
+.park:hover .shot img{transform:scale(1.05)}
+.park .shot .noimg{display:flex;align-items:center;justify-content:center;height:100%;
+  color:var(--line);}
+.park .shot .noimg svg{width:34px;height:34px}
+/* `.park .shot img` sets width/height to 100%, and on equal specificity the
+   later rule won — the flag badge was being stretched over the whole photo. */
+.park .shot img.flagbadge{position:absolute;top:9px;left:9px;
+  width:26px;height:18px;object-fit:cover;border-radius:3px;box-shadow:0 0 0 1px #0008}
+.park .body{padding:12px 14px 14px}
+.park h4{margin:0 0 3px;font:650 14.5px/1.3 var(--ui)}
+.park .where{font-size:11.5px;color:var(--faint)}
+.park .est{font-size:10.5px;color:var(--amber);margin-top:6px}
+.parkcount{color:var(--faint);font-size:12.5px;margin:0 0 14px}
+
+#park-card{max-width:760px}
+.parkhero{margin:-26px -28px 18px;position:relative}
+.parkhero img{width:100%;max-height:300px;object-fit:cover;display:block}
+.parkhero .cap{position:absolute;left:0;right:0;bottom:0;padding:26px 28px 14px;
+  background:linear-gradient(transparent,#0B1220F2)}
+.parkhero h2{margin:0;font:700 24px/1.15 var(--ui)}
+.parkhero .where{color:var(--dim);font-size:12.5px;margin-top:4px}
+.parkfacts{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
+.gsec{margin-bottom:16px}
+.gsec h5{margin:0 0 6px;font:600 10.5px/1 var(--ui);letter-spacing:.13em;
+  text-transform:uppercase;color:var(--faint)}
+.gsec p{margin:0;font-size:13.5px;line-height:1.6;color:var(--ink)}
+.gsec.warn p{color:var(--coral)}
+.leglist{display:flex;flex-direction:column;gap:7px}
+.leg{display:flex;align-items:center;gap:11px;background:#0A111E;
+  border:1px solid var(--line-soft);border-radius:10px;padding:10px 12px}
+.leg .ic{width:26px;height:26px;flex:0 0 auto;border-radius:50%;
+  background:var(--amber-soft);border:1px solid #FFB23F44;display:flex;
+  align-items:center;justify-content:center;color:var(--amber)}
+.leg .ic svg{width:13px;height:13px}
+.leg .txt{flex:1;min-width:0}
+.leg .txt b{display:block;font-size:12.5px;font-weight:600}
+.leg .txt span{font-size:11px;color:var(--faint)}
+.leg .num2{font-size:11.5px;color:var(--amber);white-space:nowrap;text-align:right}
+.photostrip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.photostrip img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:8px;display:block}
+.credit{font-size:10.5px;color:var(--faint);margin-top:10px;font-style:italic}
+
+/* what it would take to absorb the carbon — equivalences, not a plan */
+.offsetbox:empty{display:none}
+.offsetbox{background:var(--card);border:1px solid #2DD4BF33;border-radius:var(--r);
+  padding:15px 18px;margin:14px 0}
+.offsetbox h5{display:flex;align-items:center;gap:8px;margin:0 0 13px;
+  font:600 11px/1 var(--ui);letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
+.offsetbox h5 svg{width:14px;height:14px;stroke:var(--teal)}
+.offsets{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:11px}
+.off{background:#0A111E;border:1px solid var(--line-soft);border-radius:10px;padding:11px 13px}
+.off b{display:block;font:700 21px/1 var(--ui);color:var(--teal);margin-bottom:5px}
+.off span{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);
+  line-height:1.4;display:block}
+.offnote{margin:12px 0 0;font-size:11.5px;line-height:1.6;color:var(--faint)}
+.offnote b{color:var(--dim);font-weight:600}
+
+/* Collections: the grid, with the first-picks rail beside it */
+.pkcols{display:grid;grid-template-columns:1fr 290px;gap:22px;align-items:start}
+/* Both picks lists together are taller than the screen, so pinning the top
+   left Canada below the fold until you had scrolled the whole park grid. The
+   rail scrolls within itself instead and both lists stay reachable. */
+.pkrail{position:sticky;top:18px;display:flex;flex-direction:column;gap:16px;
+  max-height:calc(100vh - var(--chrome,60px) - 36px);overflow-y:auto;
+  overscroll-behavior:contain;
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent;padding-right:4px}
+.pkrail::-webkit-scrollbar{width:6px}
+.pkrail::-webkit-scrollbar-thumb{background:var(--line);border-radius:9px}
+.pkrail::-webkit-scrollbar-track{background:transparent}
+@media(max-width:1100px){.pkcols{grid-template-columns:1fr}
+  /* stacked above the grid, the rail is part of the page: no inner scroller */
+  .pkrail{order:-1;position:static;max-height:none;overflow:visible}}
+.rank{background:var(--card);border:1px solid var(--line-soft);border-radius:var(--r);
+  padding:14px 15px}
+.rank h4{display:flex;align-items:center;gap:8px;margin:0 0 3px;
+  font:600 10.5px/1 var(--ui);letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
+.rank h4 img{width:20px;height:14px;border-radius:2px}
+.rank .sub2{font-size:10.5px;color:var(--faint);margin:0 0 11px}
+.rank ol{list-style:none;margin:0;padding:0;counter-reset:r}
+.rank li{counter-increment:r;display:flex;gap:10px;align-items:flex-start;padding:9px 0;
+  border-bottom:1px solid var(--line-soft);cursor:pointer}
+.rank li:last-child{border:0}
+.rank li:hover .nm{color:var(--amber)}
+.rank li::before{content:counter(r);flex:0 0 18px;text-align:center;
+  font:700 11px/1 var(--ui);color:var(--amber);margin-top:9px}
+.rank li img{width:38px;height:28px;object-fit:cover;border-radius:5px;flex:0 0 auto}
+.rank .meta2{flex:1;min-width:0}
+.rank .nm{display:block;font-size:12.5px;font-weight:600;line-height:1.3;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank .vn{font-size:10.5px;color:var(--faint)}
+.rank .why2{display:block;font-size:11px;line-height:1.45;color:var(--dim);margin-top:3px}
+.rank li:hover .why2{color:var(--text)}
+
+
+/* ====================================================== trip: two columns ===
+   The want-list sits beside the form as a shortlist to pull from, rather than
+   above it as a step to work through. Below 1100px it goes back on top, where
+   a single column is the only honest layout. */
+.page[data-page="trip"] .wrap{max-width:1180px}
+.tripcols{display:grid;grid-template-columns:1fr 300px;gap:22px;align-items:start}
+.tripmain{min-width:0}
+.triprail{position:sticky;top:18px;display:flex;flex-direction:column;gap:14px;
+  max-height:calc(100vh - var(--chrome,60px) - 36px);overflow-y:auto;
+  overscroll-behavior:contain;scrollbar-width:thin;
+  scrollbar-color:var(--line) transparent;padding-right:4px}
+.triprail::-webkit-scrollbar{width:6px}
+.triprail::-webkit-scrollbar-thumb{background:var(--line);border-radius:9px}
+@media(max-width:1100px){
+  .tripcols{grid-template-columns:1fr}
+  .triprail{order:-1;position:static;max-height:none;overflow:visible}
+}
+.rcard{background:var(--card);border:1px solid var(--line-soft);
+  border-radius:var(--r);padding:14px 15px}
+.rcard h4{display:flex;align-items:center;gap:8px;margin:0 0 8px;
+  font:600 10.5px/1 var(--ui);letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint)}
+.rcard h4 svg{width:14px;height:14px;stroke:var(--amber)}
+.rfrom{margin:0 0 6px;font:600 14px/1.35 var(--ui);color:var(--ink)}
+.rnote{margin:0;font-size:11px;line-height:1.5;color:var(--faint)}
+.rempty{margin:9px 0 0;font-size:11.5px;line-height:1.55;color:var(--dim)}
+.wantchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.wchip{display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;
+  border:1px solid var(--line);background:#FFFFFF06;color:var(--dim);
+  font:600 12px/1 var(--ui);cursor:pointer;transition:all .15s}
+.wchip svg{width:12px;height:12px}
+.wchip:hover{color:var(--ink);border-color:var(--amber);background:var(--amber-soft)}
+.wchip.added{color:var(--teal);border-color:#2DD4BF44;background:var(--teal-soft);
+  cursor:default}
+
+/* starting point, the plus button, and the order hint */
+.stopadd.from{margin-bottom:4px}
+.bh.stopsh{margin-top:20px;padding-top:18px;border-top:1px solid var(--line-soft)}
+.fieldnote{margin:0 0 11px;font-size:11.5px;line-height:1.55;color:var(--faint)}
+.fieldnote b{color:var(--dim)}
+.orderhint{margin:10px 0 0}
+.btn.plus{gap:7px}
+.btn.plus svg{width:15px;height:15px}
+.btn.ghost{background:transparent;border:1px dashed var(--line);color:var(--faint)}
+.btn.ghost:hover{color:var(--ink);border-color:var(--amber)}
+.visafree{display:flex;flex-direction:column;gap:5px;margin:4px 0 12px;
+  padding:10px 12px;border:1px solid var(--line-soft);border-radius:10px;
+  background:#FFFFFF04}
+.check.inline{margin:0;font-size:12.5px}
+.hintline{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--faint)}
+.hintline svg{width:12px;height:12px;flex:0 0 auto}
+
+/* flights and stays — no prices anywhere, only live searches */
+.logi{margin-top:22px;padding-top:4px}
+.logi .bh{margin:20px 0 10px}
+.leg{border:1px solid var(--line-soft);border-radius:10px;padding:11px 13px;
+  margin-bottom:9px;background:#FFFFFF04}
+.legtop{display:flex;justify-content:space-between;gap:12px;align-items:baseline;
+  font-size:13.5px;color:var(--ink)}
+.legtop span{font-size:11.5px;color:var(--faint);white-space:nowrap}
+.legair{margin:5px 0 9px;font-size:11.5px;color:var(--dim);line-height:1.5}
+.legair i{font-style:normal;color:var(--amber);padding:0 4px}
+.fieldnote.ground{margin-top:4px}
+.staygrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.stay{border:1px solid var(--line-soft);border-radius:10px;padding:11px 13px;
+  background:#FFFFFF04}
+.stay b{display:block;font-size:13.5px;color:var(--ink)}
+.staynote{display:block;margin:4px 0 8px;font-size:11px;color:var(--faint);
+  line-height:1.5}
+.golinks{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.golink{display:flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;
+  border:1px solid var(--line);font:600 11.5px/1 var(--ui);color:var(--dim);
+  transition:all .15s}
+.golink svg{width:12px;height:12px}
+.golink:hover{color:var(--ink);border-color:var(--amber);background:var(--amber-soft)}
+.logidisc{display:flex;gap:9px;align-items:flex-start;margin:16px 0 0;
+  padding:10px 12px;border:1px dashed var(--line);border-radius:10px;
+  font-size:11.5px;line-height:1.55;color:var(--faint)}
+.logidisc svg{width:14px;height:14px;flex:0 0 auto;margin-top:1px;stroke:var(--amber)}
+
+/* the suggested route, compact enough for a 300px rail */
+.rroute{display:flex;flex-wrap:wrap;align-items:center;gap:5px;margin-bottom:9px}
+.rroute span{padding:4px 9px;border-radius:999px;border:1px solid var(--line);
+  background:#FFFFFF06;font:600 11.5px/1 var(--ui);color:var(--dim)}
+.rroute span.h{color:var(--teal);border-color:#2DD4BF44;background:var(--teal-soft)}
+.rroute i{font-style:normal;color:var(--faint);font-size:11px}
+.rkm{margin:0;font-size:11.5px;color:var(--faint)}
+.rkm b{color:var(--amber);font-weight:700}
+
+/* the trip list, and the + that fills it */
+.todolist{list-style:none;margin:10px 0 0;padding:0;display:flex;
+  flex-direction:column;gap:2px}
+.todolist li{display:flex;align-items:flex-start;gap:7px;padding:6px 0;
+  border-bottom:1px solid var(--line-soft)}
+.todolist li:last-child{border:0}
+.todolist label{display:flex;gap:8px;align-items:flex-start;flex:1;min-width:0;
+  cursor:pointer;margin:0}
+.todolist input{margin-top:2px;flex:0 0 auto;accent-color:var(--teal)}
+.todolist span{font-size:11.5px;line-height:1.5;color:var(--dim);word-break:break-word}
+.todolist li.done span{color:var(--line);text-decoration:line-through}
+.tdmove{display:flex;flex-direction:column;gap:2px;opacity:0;transition:opacity .15s}
+.todolist li:hover .tdmove{opacity:1}
+.tdmove .move{font-size:7px;padding:1px 3px;line-height:1}
+.todolist .kill{opacity:0;transition:opacity .15s;font-size:15px;line-height:1}
+.todolist li:hover .kill{opacity:.7}
+.todocount{color:var(--teal)}
+.todoadd{display:flex;gap:6px;margin-top:10px}
+.todoadd .inp{flex:1;min-width:0;padding:7px 10px;font-size:11.5px}
+.todoadd .btn{padding:7px 10px;flex:0 0 auto}
+.todoadd .btn svg{width:13px;height:13px;margin:0}
+.tdclear{margin-top:9px;width:100%;justify-content:center;font-size:11px}
+/* a brief flash on the card when a line lands in it */
+.justadded .rcard:last-child{border-color:var(--teal);
+  box-shadow:0 0 0 3px #2DD4BF22}
+
+.obs.keepable li{display:flex;align-items:flex-start;gap:8px}
+.obs.keepable li span{flex:1;min-width:0}
+.keep{flex:0 0 auto;display:flex;align-items:center;justify-content:center;
+  width:22px;height:22px;border-radius:7px;border:1px solid var(--line);
+  background:transparent;color:var(--faint);cursor:pointer;opacity:0;
+  transition:opacity .15s,color .15s,border-color .15s}
+.keep svg{width:12px;height:12px}
+.obs.keepable li:hover .keep{opacity:1}
+.keep:hover{color:var(--teal);border-color:#2DD4BF66;background:var(--teal-soft)}
+.keep:focus-visible{opacity:1}
+
+.legline{margin:6px 0 9px;font-size:12px;line-height:1.5;color:var(--faint)}
+.legline b{color:var(--amber);font-weight:700;letter-spacing:.02em}
+.legline span{display:block;font-size:11px;color:var(--line);margin-top:2px}
+
+/* the stop a checklist group belongs to */
+.tdwhere{display:flex;align-items:center;gap:6px;margin:11px 0 1px;
+  font:600 9.5px/1 var(--ui);letter-spacing:.11em;text-transform:uppercase;
+  color:var(--teal)}
+.tdwhere svg{width:11px;height:11px;stroke:var(--teal);flex:0 0 auto}
+.todolist + .tdwhere{margin-top:13px}
+
+/* add the whole itinerary at once */
+.addall{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 16px}
+.addall .btn svg{width:13px;height:13px}
+.addall span{font-size:11px;color:var(--faint)}
+
+/* other airports in driving range */
+.alts{margin-top:9px;padding-top:9px;border-top:1px dashed var(--line-soft)}
+.altlabel{display:block;font-size:11px;line-height:1.5;color:var(--faint);
+  margin-bottom:7px}
+.golink.alt{font-size:11px;padding:4px 9px;gap:5px}
+.golink.alt i{font-style:normal;color:var(--faint);font-size:10px}
+
+
+/* ============================================================== depth ===
+   One shared lift on every surface that is meant to read as a card, so the
+   page has layers rather than a flat field of slightly different greys. */
+.formcard,.readout,.rcard,.wkcard,.rank,.stay,.leg,.parkcard,.pkrail .rank,
+.triprail .rcard,.abcard{box-shadow:var(--lift)}
+.wkcard:hover,.stay:hover,.leg:hover,.abcard:hover{box-shadow:var(--lift-hi)}
+
+/* ============================================================== about ===
+   The one page that is allowed to be a little bit grand. */
+.page[data-page="about"] .wrap{max-width:1040px;padding-bottom:60px}
+.abouthero{text-align:center;padding:30px 10px 34px}
+.ternmark{width:210px;height:114px;display:block;margin:0 auto 10px}
+.abouthero h1{margin:0 0 14px;font:800 40px/1.1 var(--ui);letter-spacing:-.02em;
+  background:var(--brand);-webkit-background-clip:text;background-clip:text;
+  color:transparent}
+.abouthero .lede{max-width:620px;margin:0 auto;font-size:15.5px;line-height:1.7;
+  color:var(--dim)}
+.abmeta{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:20px;
+  font:600 10.5px/1 var(--ui);letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint)}
+.abmeta i{font-style:normal;color:var(--line)}
+
+.abgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:8px}
+.abcard{background:var(--card);border:1px solid var(--line-soft);
+  border-radius:var(--r);padding:20px 22px;transition:box-shadow .2s,border-color .2s}
+.abcard:hover{border-color:var(--line)}
+.abcard.wide{grid-column:1 / -1}
+.abcard h2{display:flex;align-items:center;gap:9px;margin:0 0 11px;
+  font:600 11px/1 var(--ui);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint)}
+.abcard h2 svg{width:15px;height:15px;stroke:var(--amber)}
+.abcard p{margin:0 0 11px;font-size:14px;line-height:1.72;color:var(--dim)}
+.abcard p:last-child{margin-bottom:0}
+.abcard b{color:var(--ink);font-weight:600}
+.abcard.honest{margin-top:14px;border-style:dashed}
+.abcard.honest h2 svg{stroke:var(--teal)}
+.abcard .sig{margin-top:13px;padding-top:12px;border-top:1px solid var(--line-soft);
+  font-size:12.5px;color:var(--faint)}
+
+.bh.abh{margin:30px 0 13px}
+.abfeat{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:12px}
+.abfeat a{display:block;background:var(--panel);border:1px solid var(--line-soft);
+  border-radius:12px;padding:15px 17px;transition:all .18s}
+.abfeat a:hover{border-color:var(--amber);background:var(--amber-soft);
+  transform:translateY(-2px)}
+.abfeat b{display:block;font-size:14.5px;color:var(--ink);margin-bottom:5px}
+.abfeat span{display:block;font-size:12px;line-height:1.6;color:var(--faint)}
+.abfeat a:hover span{color:var(--dim)}
+
+@media(max-width:780px){
+  .abgrid{grid-template-columns:1fr}
+  .abouthero h1{font-size:30px}
+  .ternmark{width:168px;height:92px}
+}
+
+/* a checkbox that explains what it actually does */
+.check i{display:block;font-style:normal;font-size:11px;line-height:1.5;
+  color:var(--faint);margin-top:3px;padding-left:25px}
+
+.rwish{margin:8px 0 0;padding-top:8px;border-top:1px solid var(--line-soft);
+  font-size:11px;line-height:1.55;color:var(--faint)}
+
+/* world heritage */
+.page[data-page="heritage"] .fld{max-width:360px;display:inline-block;
+  margin:0 14px 16px 0;vertical-align:top}
+.whshot{display:block;width:100%;max-height:300px;object-fit:cover;
+  border-radius:12px;margin:12px 0 14px}
+.shot.broken img{display:none}
+#wh-card{max-width:720px}
+#wh-body h2{margin:0 0 3px;font-size:21px}
+#wh-body .sub{margin:0;font-size:12px;color:var(--faint)}
+#wh-text p{font-size:14px;line-height:1.7;color:var(--dim);margin:0 0 9px}
+#wh-text .credit{font-size:11px;color:var(--faint)}
+
+/* ================================================================ quiz === */
+.quizsetup{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px}
+.qzbar{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-bottom:12px;
+  font-size:12px;color:var(--faint)}
+.qzbar b{color:var(--ink)}
+.qzscore{color:var(--teal);font-weight:600}
+.qztrack{display:flex;gap:4px;margin-left:auto}
+.qztrack i{width:16px;height:4px;border-radius:9px;background:var(--line-soft)}
+.qztrack i.hit{background:var(--teal)}
+.qztrack i.miss{background:var(--coral)}
+.qzcard{background:var(--card);border:1px solid var(--line-soft);
+  border-radius:var(--r);padding:24px 26px;box-shadow:var(--lift)}
+.qzflag{display:block;width:190px;border-radius:8px;margin:0 auto 18px;
+  border:1px solid var(--line)}
+.qzcard h2{margin:0 0 18px;font:600 20px/1.4 var(--ui);color:var(--ink)}
+.qzopts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(max-width:620px){.qzopts{grid-template-columns:1fr}}
+.qzopt{padding:14px 16px;border-radius:11px;border:1px solid var(--line);
+  background:#FFFFFF06;color:var(--dim);font:600 14px/1.35 var(--ui);
+  text-align:left;cursor:pointer;transition:all .15s}
+.qzopt:hover:not(:disabled){color:var(--ink);border-color:var(--amber);
+  background:var(--amber-soft)}
+.qzopt:disabled{cursor:default}
+.qzopt.right{color:var(--teal);border-color:#32D3BC77;background:var(--teal-soft)}
+.qzopt.wrong{color:var(--coral);border-color:#FF6B6B77;background:#1A0F14}
+.qzopt.faded{opacity:.45}
+.qznote{margin:16px 0 14px;font-size:13px;line-height:1.65;color:var(--faint)}
+.qznote b.ok{color:var(--teal)}
+.qznote b.no{color:var(--coral)}
+.qzdone{text-align:center}
+.qzbig{font:800 64px/1 var(--ui);letter-spacing:-.03em;
+  background:var(--brand);-webkit-background-clip:text;background-clip:text;
+  color:transparent;margin-bottom:10px}
+.qzbig small{font-size:26px;opacity:.6}
+.qzagain{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}

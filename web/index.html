@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tern · Traveler Not a Tourist</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ============================================================== icons ===
+     Every symbol on this site is drawn here as SVG geometry. Nothing is a
+     generated image, so the whole thing scales, recolours and ships in 4 KB. -->
+<svg class="sprite" aria-hidden="true">
+  <defs>
+    <linearGradient id="grad-brand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0"   stop-color="#FFB23F" />
+      <stop offset=".55" stop-color="#FF6B6B" />
+      <stop offset="1"   stop-color="#8B8CFF" />
+    </linearGradient>
+  </defs>
+  <symbol id="i-globe" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" />
+  </symbol>
+  <symbol id="i-compass" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="9" /><path d="M15.8 8.2l-2.4 5.2-5.2 2.4 2.4-5.2 5.2-2.4z" />
+  </symbol>
+  <symbol id="i-plane" viewBox="0 0 24 24">
+    <path d="M21.5 2.5L10.8 13.2M21.5 2.5l-6.8 19-3.9-8.3-8.3-3.9 19-6.8z" />
+  </symbol>
+  <symbol id="i-suitcase" viewBox="0 0 24 24">
+    <rect x="2.5" y="7.5" width="19" height="13" rx="2.5" /><path d="M8.5 7.5V4.8h7v2.7M8.5 20.5v-13M15.5 20.5v-13" />
+  </symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24">
+    <path d="M20.5 12.5a7.5 7.5 0 01-7.5 7.5H8l-4.5 3 1.2-3.6A7.5 7.5 0 0110 4.5h3a7.5 7.5 0 017.5 7.5z" />
+  </symbol>
+  <symbol id="i-waves" viewBox="0 0 24 24">
+    <path d="M2 16.5c2.3-2.2 3.7-2.2 6 0s3.7 2.2 6 0 3.7-2.2 6 0M2 10.5c2.3-2.2 3.7-2.2 6 0s3.7 2.2 6 0 3.7-2.2 6 0" />
+  </symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24">
+    <path d="M12 21.5s7-6.6 7-12a7 7 0 10-14 0c0 5.4 7 12 7 12z" /><circle cx="12" cy="9.5" r="2.6" />
+  </symbol>
+  <symbol id="i-sparkle" viewBox="0 0 24 24">
+    <path d="M12 2.5l2 6.4 6.4 2-6.4 2-2 6.4-2-6.4-6.4-2 6.4-2 2-6.4z" />
+  </symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" /></symbol>
+  <symbol id="i-ticket" viewBox="0 0 24 24">
+    <path d="M3.5 8.5a2 2 0 012-2h13a2 2 0 012 2 2.2 2.2 0 000 4.4 2.2 2.2 0 000 4.6 2 2 0 01-2 2h-13a2 2 0 01-2-2 2.2 2.2 0 000-4.6 2.2 2.2 0 000-4.4z" />
+    <path d="M14 6.5v11" stroke-dasharray="2 2.4" />
+  </symbol>
+  <symbol id="i-tower" viewBox="0 0 24 24">
+    <path d="M12 3v7M7.5 21l3-11h3l3 11M9 16h6" /><circle cx="12" cy="3" r="1.3" />
+  </symbol>
+  <symbol id="i-key" viewBox="0 0 24 24">
+    <circle cx="8" cy="12" r="4.2" /><path d="M12.2 12H21M18 12v3.2M15.2 12v2.4" />
+  </symbol>
+  <symbol id="i-user" viewBox="0 0 24 24">
+    <circle cx="12" cy="8.5" r="3.8" /><path d="M4.5 20.5a7.5 7.5 0 0115 0" />
+  </symbol>
+  <symbol id="i-out" viewBox="0 0 24 24">
+    <path d="M14.5 20.5h-7a2 2 0 01-2-2v-13a2 2 0 012-2h7M18 15.5l3-3.5-3-3.5M21 12h-11" />
+  </symbol>
+  <symbol id="i-home" viewBox="0 0 24 24">
+    <path d="M3.5 10.5L12 3.5l8.5 7M5.5 9.5v10h13v-10M9.5 19.5v-6h5v6" />
+  </symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24">
+    <path d="M4 20c0-9 6-14 16-15 1 10-4 16-13 16H4zM7 17c3-5 6-7 9-8" />
+  </symbol>
+  <symbol id="i-chat2" viewBox="0 0 24 24">
+    <path d="M4.5 5.5h15v11h-9l-4.5 3.5v-3.5h-1.5z" /><path d="M8 9.5h8M8 12.5h5" />
+  </symbol>
+  <symbol id="i-tern" viewBox="0 0 24 24">
+    <path d="M3 15.5Q8 5.5 12 11Q16 5.5 21 15.5" stroke-linecap="round"
+          stroke-linejoin="round" />
+  </symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24">
+    <path d="M12 5.5v13M5.5 12h13" stroke-linecap="round" />
+  </symbol>
+  <symbol id="i-bed" viewBox="0 0 24 24">
+    <path d="M3 18v-7h18v7M3 11V7M3 18v2M21 18v2" stroke-linecap="round" />
+    <path d="M7 11V9.5a1.5 1.5 0 011.5-1.5h3A1.5 1.5 0 0113 9.5V11" />
+  </symbol>
+  <symbol id="i-link" viewBox="0 0 24 24">
+    <path d="M10 13.5a3.5 3.5 0 005 0l3-3a3.5 3.5 0 10-5-5l-1 1" stroke-linecap="round" />
+    <path d="M14 10.5a3.5 3.5 0 00-5 0l-3 3a3.5 3.5 0 105 5l1-1" stroke-linecap="round" />
+  </symbol>
+  <symbol id="i-route" viewBox="0 0 24 24">
+    <circle cx="6" cy="5.5" r="2.5" /><circle cx="18" cy="18.5" r="2.5" />
+    <path d="M6 8v4a4 4 0 004 4h4" stroke-dasharray="2.5 2.5" />
+  </symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M18.8 5.2l-1.4 1.4M6.6 17.4l-1.4 1.4" />
+  </symbol>
+  <symbol id="i-stamp" viewBox="0 0 24 24">
+    <rect x="3" y="9.5" width="18" height="11" rx="1.6" stroke-dasharray="2.6 2.2" />
+    <path d="M9 9.5V7a3 3 0 116 0v2.5" />
+  </symbol>
+</svg>
+
+<!-- =============================================================== nav === -->
+<header class="nav">
+  <a class="brand" href="#/map" title="The Arctic tern migrates pole to pole — about 70,000 km a year. No bird on Earth travels further.">
+    <svg class="logo" viewBox="0 0 40 40" aria-hidden="true">
+      <circle cx="20" cy="20" r="17.5" fill="none" stroke="url(#grad-brand)" stroke-width="1.8" />
+      <path d="M7 27.5Q20 4 33 13" fill="none" stroke="url(#grad-brand)" stroke-width="1.2"
+            stroke-dasharray="1.6 3" opacity=".6" />
+      <path d="M10 24.5Q15.5 15 20 21.8Q24.5 15 30 24.5" fill="none" stroke="url(#grad-brand)"
+            stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+    <span class="wordmark">
+      <b>TERN</b>
+      <i>traveler not a tourist</i>
+    </span>
+  </a>
+
+  <!-- Four groups rather than seven tabs. The page hashes are unchanged, so
+       every existing link still resolves; only the grouping is new. -->
+  <nav class="tabs" id="tabs">
+    <a class="tab" href="#/map" data-group="world">
+      <svg class="i"><use href="#i-globe" /></svg>My World</a>
+    <a class="tab" href="#/next" data-group="discover">
+      <svg class="i"><use href="#i-sparkle" /></svg>Discover</a>
+    <a class="tab" href="#/trip" data-group="plan">
+      <svg class="i"><use href="#i-suitcase" /></svg>Plan</a>
+    <a class="tab" href="#/consultant" data-group="ask">
+      <svg class="i"><use href="#i-chat" /></svg>Consultant</a>
+    <a class="tab" href="#/quiz" data-group="quiz">
+      <svg class="i"><use href="#i-globe" /></svg>Test Yourself</a>
+    <a class="tab" href="#/about" data-group="about">
+      <svg class="i"><use href="#i-tern" /></svg>About</a>
+  </nav>
+
+  <!-- always-on readout, so the numbers follow you between pages -->
+  <a class="boarding" href="#/insights" id="boarding">
+    <span class="bp"><b id="nav-count">0</b><i>places</i></span>
+    <span class="bpsep"><svg class="i"><use href="#i-plane" /></svg></span>
+    <span class="bp"><b id="nav-world">0%</b><i>of the world</i></span>
+  </a>
+
+  <button class="acct trip" id="btn-passport" title="Home country and passport">
+    <svg class="i"><use href="#i-home" /></svg><span id="pp-label">Set home</span>
+  </button>
+
+  <div class="account">
+    <button class="acct guest" id="btn-signin">
+      <svg class="i"><use href="#i-key" /></svg><span>Sign in</span></button>
+    <div class="acct who" id="who" hidden>
+      <svg class="i"><use href="#i-user" /></svg>
+      <span id="who-email">—</span>
+      <button class="signout" id="btn-signout" title="Sign out">
+        <svg class="i"><use href="#i-out" /></svg></button>
+    </div>
+  </div>
+</header>
+
+<!-- Only shown for groups that hold more than one page. -->
+<nav class="subnav" id="subnav" hidden></nav>
+
+<!-- ========================================================== passport === -->
+<div class="modal" id="passport" hidden>
+  <form class="authcard" id="pp-form">
+    <button class="x" type="button" id="pp-close" aria-label="Close">&times;</button>
+    <div class="authhead">
+      <svg class="i xl" style="width:34px;height:34px"><use href="#i-home" /></svg>
+      <div>
+        <h2>Where do you start from?</h2>
+        <p>Unlocks distance, carbon, visa checks and trip routing. Everything
+           else works without it.</p>
+      </div>
+    </div>
+    <label class="fld"><span>Home country</span>
+      <select class="inp" id="pp-home"></select></label>
+    <label class="fld combo" id="pp-city-wrap" hidden>
+      <span>City &mdash; distances start here, not at the capital</span>
+      <input class="inp" id="pp-city" autocomplete="off" placeholder="start typing&hellip;" />
+      <div class="suggest" id="pp-suggest" hidden></div>
+      <em class="hint" id="pp-city-hint"></em>
+    </label>
+    <label class="fld"><span>Passport &mdash; for visa checks</span>
+      <select class="inp" id="pp-pass"></select></label>
+    <div class="autherr" id="pp-err" hidden></div>
+    <button class="btn solid wide" type="submit">Save</button>
+    <p class="authnote">Stored on this device, or on your account if you are signed in.</p>
+  </form>
+</div>
+
+<!-- ============================================================== auth === -->
+<div class="modal" id="auth" hidden>
+  <form class="authcard" id="auth-form" autocomplete="on">
+    <button class="x" type="button" id="auth-close" aria-label="Close">&times;</button>
+    <div class="authhead">
+      <svg class="logo" viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="17.5" fill="none" stroke="url(#grad-brand)" stroke-width="1.8" />
+        <path d="M10 24.5Q15.5 15 20 21.8Q24.5 15 30 24.5" fill="none" stroke="url(#grad-brand)"
+              stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <div>
+        <h2 id="auth-title">Welcome back</h2>
+        <p id="auth-sub">Your map is waiting where you left it.</p>
+      </div>
+    </div>
+
+    <div class="seg" id="auth-seg">
+      <button type="button" class="segb on" data-mode="login">Sign in</button>
+      <button type="button" class="segb"    data-mode="register">Create account</button>
+    </div>
+
+    <label class="fld"><span>Email</span>
+      <input class="inp" id="a-email" type="email" autocomplete="email"
+             placeholder="you@example.com" required /></label>
+    <label class="fld"><span>Password</span>
+      <input class="inp" id="a-pass" type="password" autocomplete="current-password"
+             placeholder="at least 8 characters" required minlength="8" /></label>
+    <label class="fld" id="a-confirm-wrap" hidden><span>Confirm password</span>
+      <input class="inp" id="a-confirm" type="password" autocomplete="new-password"
+             placeholder="type it again" /></label>
+
+    <div class="autherr" id="auth-err" hidden></div>
+    <button class="btn solid wide" type="submit" id="auth-go">Sign in</button>
+
+    <p class="authnote" id="auth-carry" hidden></p>
+    <p class="authnote">
+      Try it without signing up: <b>test1</b> or <b>test2</b>, password <b>12345678</b>.
+    </p>
+  </form>
+</div>
+
+<main id="main">
+
+<!-- ============================================================ 1 · MAP === -->
+<section class="page" data-page="map">
+  <div class="stage">
+    <div class="stagebar">
+      <h1 class="ph"><svg class="i"><use href="#i-pin" /></svg>Paint your world</h1>
+      <p class="psub">Click any country, then pick a label.</p>
+      <div class="legend">
+        <span class="lg visited"><i></i>visited</span>
+        <span class="lg lived"><i></i>lived</span>
+        <span class="lg want"><i></i>want to go</span>
+        <span class="lg nodata" title="UN Tourism never published arrivals for these"><i></i>no data</span>
+        <button class="ghost" id="clear-all">clear all</button>
+      </div>
+    </div>
+    <svg id="map"></svg>
+    <div class="maphint"><svg class="i"><use href="#i-waves" /></svg>scroll to zoom · drag to pan</div>
+    <div class="timeline" id="timeline" hidden>
+      <button class="tplay" id="tl-play" title="Play"><svg class="i"><use href="#i-plane" /></svg></button>
+      <input type="range" id="tl-range" />
+      <div class="tlabel"><b id="tl-year">all</b><span id="tl-count"></span></div>
+      <button class="ghost" id="tl-all">show all</button>
+    </div>
+  </div>
+
+  <aside class="rail">
+    <h2 class="rh">Your pins</h2>
+    <div class="lists" id="lists"></div>
+    <div class="nudge" id="nudge" hidden>
+      <svg class="i"><use href="#i-stamp" /></svg>
+      <div>Guest mode — this map lives in this browser only.
+        <a href="#" id="nudge-go">Create an account</a> to keep it anywhere.</div>
+      <button class="x sm" id="nudge-x" title="Dismiss">&times;</button>
+    </div>
+    <div class="railfoot">
+      <div class="minis">
+        <div class="mini"><b id="m-count">0</b><span>places</span></div>
+        <div class="mini"><b id="m-world">0%</b><span>of 195 countries</span></div>
+      </div>
+      <a class="btn solid wide" href="#/insights">
+        Read my map<svg class="i"><use href="#i-arrow" /></svg></a>
+      <div class="saved" id="saved"><svg class="i"><use href="#i-stamp" /></svg><span></span></div>
+    </div>
+  </aside>
+
+  <div class="picker" id="picker" hidden>
+    <div class="pk-head">
+      <img class="flag big" id="pk-flag" alt="" />
+      <div class="pk-name" id="pk-name"></div>
+    </div>
+    <div class="pk-stat" id="pk-stat"></div>
+    <div class="pk-row">
+      <button class="pk visited" data-set="visited">Visited</button>
+      <button class="pk lived"   data-set="lived">Lived</button>
+      <button class="pk want"    data-set="want">Want</button>
+    </div>
+    <label class="pk-year" id="pk-year-wrap" hidden>
+      <span>Year</span>
+      <input class="inp" id="pk-year" type="number" placeholder="optional"
+             min="1900" max="2100" />
+    </label>
+    <button class="pk-clear" data-set="">Remove label</button>
+  </div>
+</section>
+
+<!-- ======================================================= 2 · INSIGHTS === -->
+<section class="page scrolls" data-page="insights" hidden>
+  <div class="wrap">
+    <div class="empty" id="ins-empty" hidden>
+      <svg class="i xl"><use href="#i-globe" /></svg>
+      <p>Nothing pinned yet.</p>
+      <a class="btn solid" href="#/map">Go paint the map<svg class="i"><use href="#i-arrow" /></svg></a>
+    </div>
+
+    <div id="ins-body" hidden>
+      <div class="verdictrow">
+        <div class="stamp" id="stamp">
+          <svg class="i"><use href="#i-stamp" /></svg>
+          <b id="vbig">—</b>
+          <i id="vstampsub">entry recorded</i>
+        </div>
+        <div class="vtext">
+          <h1 class="ph">What your map says</h1>
+          <p class="psub" id="vsub">Label a few countries and the numbers appear here.</p>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><svg class="i"><use href="#i-pin" /></svg><b id="s-count">0</b><span>places pinned</span></div>
+        <div class="stat"><svg class="i"><use href="#i-globe" /></svg><b id="s-world">0%</b><span>of the world's 195 countries</span><em class="plus" id="s-terr"></em></div>
+        <div class="stat hero"><svg class="i"><use href="#i-plane" /></svg><b id="s-flow">0%</b><span>of all world trips go where you&rsquo;ve been</span></div>
+        <div class="stat"><svg class="i"><use href="#i-sparkle" /></svg><b id="s-rare">—</b><span>rarest stop</span></div>
+      </div>
+
+      <div class="meter">
+        <div class="mtop">
+          <span><svg class="i"><use href="#i-waves" /></svg>How concentrated your map is</span>
+          <b id="mval">0%</b>
+        </div>
+        <p class="mlede" id="mlede"></p>
+        <div class="track">
+          <div class="fill" id="mfill"></div>
+          <div class="mark warn" id="mmark"><i>tourist line</i></div>
+          <div class="mark top10" id="mtop10"><i>all top-10 countries</i></div>
+        </div>
+        <p class="mnote" id="mnote"></p>
+      </div>
+
+      <div class="context" id="context"></div>
+
+      <!-- ---------------------------------------------------- footprint -->
+      <section class="block" id="blk-footprint" hidden>
+        <h2 class="bh"><svg class="i"><use href="#i-plane" /></svg>Your footprint</h2>
+        <div class="stats four" id="fp-tiles"></div>
+        <div class="offsetbox" id="fp-offset"></div>
+        <p class="mnote" id="fp-note"></p>
+      </section>
+
+      <!-- -------------------------------------------------------- reach -->
+      <section class="block">
+        <h2 class="bh"><svg class="i"><use href="#i-chat2" /></svg>Your reach</h2>
+        <div class="reachgrid" id="reach"></div>
+      </section>
+
+      <!-- --------------------------------------------------------- gaps -->
+      <section class="block">
+        <h2 class="bh"><svg class="i"><use href="#i-compass" /></svg>Your gaps</h2>
+        <div class="gapgrid" id="gaps"></div>
+      </section>
+
+      <div class="act">
+        <button class="btn solid" id="go-verdict"><svg class="i"><use href="#i-compass" /></svg>Get the analyst's read</button>
+      </div>
+      <div id="verdict-out"></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================== 3 · NEXT === -->
+<section class="page scrolls" data-page="next" hidden>
+  <div class="wrap">
+    <h1 class="ph"><svg class="i"><use href="#i-sparkle" /></svg>Where next</h1>
+    <div id="rec-head"></div>
+    <div class="filters" id="rec-filters" hidden>
+      <button class="chip-f" data-f="visa"><svg class="i"><use href="#i-ticket" /></svg>No visa needed</button>
+      <button class="chip-f" data-f="cheap"><svg class="i"><use href="#i-suitcase" /></svg>Cheaper than home</button>
+      <button class="chip-f" data-f="near"><svg class="i"><use href="#i-plane" /></svg>Sort by distance</button>
+    </div>
+    <div class="act">
+      <button class="btn solid" id="go-rec" hidden><svg class="i"><use href="#i-compass" /></svg>Tell me what I&rsquo;m walking into</button>
+    </div>
+    <div id="rec-out"></div>
+  </div>
+</section>
+
+<!-- ======================================================== 4 · WEEKEND === -->
+<section class="page scrolls" data-page="getaways" hidden>
+  <div class="wrap">
+    <h1 class="ph"><svg class="i"><use href="#i-route" /></svg>Getaways</h1>
+    <p class="psub">Real places close enough to leave on a Friday and be home by Sunday.
+      <b>Pick a theme</b> and the scout names the spots people actually go to from
+      where you are &mdash; trailhead towns for hiking, the ones couples book for a
+      romantic weekend &mdash; and every name is checked against the map, so anything
+      out of range or not findable is dropped before you see it. Distances, how you
+      could get there and a visa warning for your passport are all measured, not
+      guessed. With no theme you get the nearest sizeable cities instead.</p>
+
+    <div class="wkbar">
+      <label class="fld combo" style="flex:1 1 260px;margin:0">
+        <span>Starting from</span>
+        <input class="inp" id="wk-city" autocomplete="off" placeholder="your city&hellip;" />
+        <div class="suggest" id="wk-suggest" hidden></div>
+      </label>
+      <label class="fld" style="flex:0 0 160px;margin:0">
+        <span>How far at most</span>
+        <select class="inp" id="wk-range">
+          <option value="300">under 300 km</option>
+          <option value="600" selected>under 600 km</option>
+          <option value="1000">under 1,000 km</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="themes" id="wk-themes"></div>
+    <div id="wk-out"></div>
+    <div class="act" id="wk-act" hidden>
+      <button class="btn solid" id="go-weekend"><svg class="i"><use href="#i-compass" /></svg>What&rsquo;s worth going for</button>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== weekend plan === -->
+<div class="modal" id="plan" hidden>
+  <div class="plancard">
+    <button class="x" type="button" id="plan-close" aria-label="Close">&times;</button>
+    <div id="plan-body"></div>
+  </div>
+</div>
+
+<!-- ===================================================== 5 · COLLECTIONS === -->
+<section class="page scrolls" data-page="collections" hidden>
+  <div class="wrap">
+    <h1 class="ph"><svg class="i"><use href="#i-stamp" /></svg>National Parks</h1>
+    <p class="psub">Lists worth working through. Every national park in the United
+      States and Canada &mdash; click one for what it is for, when to go, and how
+      you would get there from where you live.</p>
+
+    <div class="filters" id="pk-filters">
+      <button class="chip-f on" data-c="">All</button>
+      <button class="chip-f" data-c="USA">United States</button>
+      <button class="chip-f" data-c="CAN">Canada</button>
+    </div>
+    <label class="fld" style="max-width:340px;margin-bottom:18px">
+      <span>Search</span>
+      <input class="inp" id="pk-search" placeholder="park or state&hellip;" autocomplete="off" />
+    </label>
+
+    <div class="pkcols">
+      <div id="pk-out"></div>
+      <aside class="pkrail" id="pk-rail"></aside>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================== park detail === -->
+<div class="modal" id="parkmodal" hidden>
+  <div class="plancard" id="park-card">
+    <button class="x" type="button" id="park-close" aria-label="Close">&times;</button>
+    <div id="park-body"></div>
+  </div>
+</div>
+
+<!-- =========================================================== 6 · TRIP === -->
+<section class="page scrolls" data-page="trip" hidden>
+  <div class="wrap">
+    <h1 class="ph"><svg class="i"><use href="#i-suitcase" /></svg>Plan the trip</h1>
+    <p class="psub">Add one stop or several. Say where you are setting out from, pick
+      the places you are going, and the architect builds the days around them &mdash;
+      counting the travel between stops, not pretending it is free. Several stops get
+      ordered to keep the flying down, and anything needing a visa is flagged before
+      you book.</p>
+
+    <div class="tripcols">
+      <div class="tripmain">
+        <div class="formcard" id="trip-stops">
+          <h2 class="bh"><svg class="i"><use href="#i-plane" /></svg>Starting from</h2>
+          <p class="fieldnote">Where this trip begins. It starts at your home city,
+            but change it if you are setting out from somewhere else.</p>
+          <div class="stopadd from">
+            <label class="fld"><span>Country</span>
+              <select class="inp" id="o-country"></select></label>
+            <label class="fld"><span>City</span>
+              <select class="inp" id="o-city"><option value="">capital city</option></select></label>
+            <button class="btn sm ghost" type="button" id="o-reset"
+                    title="Back to your home city">Use home</button>
+          </div>
+
+          <h2 class="bh stopsh"><svg class="i"><use href="#i-route" /></svg>Where you are going</h2>
+          <div class="stopadd">
+            <label class="fld"><span>Country</span>
+              <select class="inp" id="s-country"></select></label>
+            <label class="fld"><span>City</span>
+              <select class="inp" id="s-city"><option value="">anywhere in the country</option></select></label>
+            <button class="btn solid plus" type="button" id="s-add" title="Add this stop">
+              <svg class="i"><use href="#i-plus" /></svg><span>Add</span></button>
+          </div>
+          <div class="visafree" id="s-visafree"></div>
+          <div class="stoplist" id="s-list"></div>
+          <p class="fieldnote orderhint" id="s-orderhint" hidden>The order above is the
+            order you will travel in &mdash; use the arrows to change it. We will also
+            work out the shortest order and offer it to you.</p>
+          <div class="routebar" id="s-route" hidden></div>
+        </div>
+
+        <div class="formcard" id="trip-form"></div>
+        <div id="trip-context"></div>
+        <div id="trip-out"></div>
+      </div>
+
+      <aside class="triprail" id="triprail"></aside>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================== 8 · QUIZ === -->
+<section class="page scrolls" data-page="quiz" hidden>
+  <div class="wrap narrow">
+    <h1 class="ph"><svg class="i"><use href="#i-globe" /></svg>How well do you know it?</h1>
+    <p class="psub">Ten questions, drawn from the same reference data the rest
+      of the site runs on &mdash; capitals, flags and land borders. The wrong
+      answers come from the same part of the world as the right one, so nothing
+      is guessable from the shape of the options alone.</p>
+
+    <div class="quizsetup" id="qz-setup">
+      <div class="seg" id="qz-kind">
+        <button type="button" class="segb on" data-kind="mixed">Mixed</button>
+        <button type="button" class="segb" data-kind="capital">Capitals</button>
+        <button type="button" class="segb" data-kind="flag">Flags</button>
+        <button type="button" class="segb" data-kind="border">Borders</button>
+      </div>
+      <button class="btn solid" type="button" id="qz-start">
+        <svg class="i"><use href="#i-plane" /></svg>Start</button>
+    </div>
+
+    <div id="qz-out"></div>
+  </div>
+</section>
+
+<!-- ====================================================== 7 · HERITAGE === -->
+<section class="page scrolls" data-page="heritage" hidden>
+  <div class="wrap">
+    <h1 class="ph"><svg class="i"><use href="#i-stamp" /></svg>World Heritage</h1>
+    <p class="psub">The places UNESCO judged to matter to everybody, not just to
+      the country holding them &mdash; 1,200-odd of them, from the Pyramids to a
+      Norwegian fjord. Pick a country and see what it is keeping.</p>
+
+    <label class="fld">
+      <span>Country</span>
+      <select class="inp" id="wh-country"></select>
+    </label>
+    <label class="fld">
+      <span>Search</span>
+      <input class="inp" id="wh-search" placeholder="site name&hellip;" autocomplete="off" />
+    </label>
+
+    <div id="wh-out"></div>
+  </div>
+</section>
+
+<div class="modal" id="whmodal" hidden>
+  <div class="plancard" id="wh-card">
+    <button class="x" type="button" id="wh-close" aria-label="Close">&times;</button>
+    <div id="wh-body"></div>
+  </div>
+</div>
+
+<!-- ========================================================= 6 · ABOUT === -->
+<section class="page scrolls" data-page="about" hidden>
+  <div class="wrap">
+
+    <div class="abouthero">
+      <svg class="ternmark" viewBox="0 0 220 120" aria-hidden="true">
+        <defs>
+          <linearGradient id="tgrad" x1="0" y1="1" x2="1" y2="0">
+            <stop offset="0%"   stop-color="#FFB23F" />
+            <stop offset="52%"  stop-color="#FF6B6B" />
+            <stop offset="100%" stop-color="#9B8CFF" />
+          </linearGradient>
+        </defs>
+        <!-- a great-circle track, and the bird riding it -->
+        <path d="M6 104Q70 10 214 34" fill="none" stroke="url(#tgrad)"
+              stroke-width="1.4" stroke-dasharray="2 5" opacity=".55" />
+        <path d="M44 86Q74 36 110 70Q146 36 176 86" fill="none"
+              stroke="url(#tgrad)" stroke-width="6"
+              stroke-linecap="round" stroke-linejoin="round" />
+        <circle cx="6" cy="104" r="3.5" fill="#FFB23F" />
+        <circle cx="214" cy="34" r="3.5" fill="#9B8CFF" />
+      </svg>
+      <h1>Traveler, not a tourist.</h1>
+      <p class="lede">Tern is a planning desk for people who would rather
+        understand a place than tick it off. It keeps the map of where you
+        have been, works out what that actually adds up to, and builds the
+        next trip around it &mdash; distances, visas, airports and all.</p>
+      <div class="abmeta">
+        <span>Founded 2026</span><i>&middot;</i>
+        <span>New Haven, Connecticut</span>
+      </div>
+    </div>
+
+    <div class="abgrid">
+      <div class="abcard wide">
+        <h2><svg class="i"><use href="#i-tern" /></svg>Why a tern</h2>
+        <p>The Arctic tern makes the longest migration of any animal alive.
+          Every year it flies from the Arctic to the Antarctic and back
+          &mdash; roughly <b>70,000 km</b>, pole to pole, chasing the light so
+          that it lives in near-perpetual summer. Over a life of thirty-odd
+          years that comes to something like three return trips to the Moon.</p>
+        <p>It is not a bird that wanders. It goes a very long way, on purpose,
+          and it knows exactly why it is going. That seemed like the right
+          thing to name a travel app after.</p>
+      </div>
+
+      <div class="abcard">
+        <h2><svg class="i"><use href="#i-compass" /></svg>Why I built it</h2>
+        <p>I love travelling, and I have never found the planning part to
+          match. The map of where you have been lives in one place, the visa
+          rules in another, the flights somewhere else again, and none of them
+          talk to each other.</p>
+        <p>I am an MBA student at Yale, and I built Tern to put those pieces on
+          one desk &mdash; and to make the case that travelling well is a skill
+          worth getting better at, not a scoreboard.</p>
+      </div>
+
+      <div class="abcard">
+        <h2><svg class="i"><use href="#i-stamp" /></svg>What the name is not</h2>
+        <p>&ldquo;Traveler, not a tourist&rdquo; is a philosophy about how to
+          go somewhere, not a verdict on anybody. Nothing here grades you. The
+          numbers exist so you can see the shape of your own travelling
+          &mdash; which corners of the world you keep returning to, and which
+          you have never once looked at.</p>
+      </div>
+    </div>
+
+    <h2 class="bh abh"><svg class="i"><use href="#i-route" /></svg>What is on the desk</h2>
+    <div class="abfeat">
+      <a href="#/map"><b>Map</b><span>Paint everywhere you have been, lived, or
+        mean to go. 249 countries, territories included.</span></a>
+      <a href="#/insights"><b>Insights</b><span>What your map adds up to against
+        real arrivals data &mdash; and the carbon it came to.</span></a>
+      <a href="#/next"><b>Where Next</b><span>Countries off your usual path,
+        chosen from your own want-list.</span></a>
+      <a href="#/getaways"><b>Getaways</b><span>Somewhere real to go this
+        weekend, by theme, within reach of home.</span></a>
+      <a href="#/collections"><b>National Parks</b><span>Every one in the US
+        and Canada, with how to get there from home.</span></a>
+      <a href="#/trip"><b>Plan</b><span>A multi-stop trip with the distances,
+        visas, airports and stays worked out.</span></a>
+      <a href="#/quiz"><b>Test Yourself</b><span>Ten questions on capitals,
+        flags and borders. No credit for guessing.</span></a>
+    </div>
+
+    <div class="abcard honest">
+      <h2><svg class="i"><use href="#i-tower" /></svg>What it will not do</h2>
+      <p>Tern holds no fares, no room rates and no flight schedules, and it
+        will not invent them. Where a real number is needed it names what it
+        actually knows &mdash; the airport, the distance, the visa rule, the
+        arrivals figure and its year &mdash; and hands the rest to the people
+        who hold live data, with the search already filled in.</p>
+      <p class="sig">Every figure on this site traces back to a published
+        source. Where something is a judgement rather than a measurement, it
+        says so.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================================================== 5 · CONSULTANT === -->
+<section class="page" data-page="consultant" hidden>
+  <div class="chatwrap">
+    <div class="chatlog" id="chatlog">
+      <div class="bub them">I am your travelling consultant. Ask me anything about
+        travel &mdash; where to go, when to go, visas, weather, food, getting
+        around &mdash; and I will help.</div>
+    </div>
+    <form class="ask" id="chat-ask">
+      <svg class="i"><use href="#i-ticket" /></svg>
+      <input id="chat-input" placeholder="Is Georgia getting touristy?" maxlength="1000" autocomplete="off" />
+      <button class="btn solid" type="submit">Ask</button>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<div class="tip" id="tip"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

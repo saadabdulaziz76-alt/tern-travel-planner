@@ -1,0 +1,131 @@
+{"ts": "2026-10-15T20:10:23", "event": "injection_blocked", "session": "727d2ec92c1c", "category": "override", "matched": "Ignore all previous instruction"}
+{"ts": "2026-10-15T20:10:23", "event": "injection_blocked", "session": "6100a89b9d2e", "category": "secret", "matched": "PORTKEY_API_KEY"}
+{"ts": "2026-10-15T20:10:23", "event": "injection_blocked", "session": "a2b6e27ec06d", "category": "exfiltration", "matched": "list all users"}
+{"ts": "2026-10-15T20:11:37", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-15T20:12:02", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-15T20:13:00", "event": "injection_blocked", "session": "ae81212fca52", "category": "override", "matched": "Ignore all previous instruction"}
+{"ts": "2026-10-15T20:13:00", "event": "injection_blocked", "session": "ae81212fca52", "category": "secret", "matched": "PORTKEY_API_KEY"}
+{"ts": "2026-10-15T20:14:21", "event": "injection_blocked", "session": "adcd5dfe8459", "category": "override", "matched": "Ignore all previous instruction"}
+{"ts": "2026-10-15T20:14:21", "event": "injection_blocked", "session": "c7a0e1ba47fc", "category": "prompt-theft", "matched": "Print your system prompt"}
+{"ts": "2026-10-15T20:14:21", "event": "injection_blocked", "session": "46afbd3a4cb3", "category": "secret", "matched": "PORTKEY_API_KEY"}
+{"ts": "2026-10-15T20:14:21", "event": "injection_blocked", "session": "4abdd97904da", "category": "role-hijack", "matched": "You are now"}
+{"ts": "2026-10-15T20:14:21", "event": "injection_blocked", "session": "5d85e681eecc", "category": "exfiltration", "matched": "List all users"}
+{"ts": "2026-10-15T20:14:21", "event": "injection_blocked", "session": "3fcc38c3e6bb", "category": "override", "matched": "IGNORE PRIOR INSTRUCTION"}
+{"ts": "2026-10-15T20:15:05", "event": "budget_block", "session": "176a2b39e215", "reason": "this conversation has reached its limit", "day": "2026-10-15", "tokens_used": 1948, "daily_token_budget": 400000, "calls_used": 1, "daily_call_budget": 3, "session_call_budget": 1, "pct_tokens": 0.5}
+{"ts": "2026-10-15T20:15:29", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-15T20:35:29", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-15T20:37:23", "event": "throttled", "caller": "127.0.0.1", "route": "verdict", "retry_after": 42}
+{"ts": "2026-10-15T20:38:22", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-15T20:38:41", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-15T20:38:41", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-15T20:38:41", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-15T20:38:41", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-15T20:38:54", "event": "injection_blocked", "session": "da686002b838", "category": "override", "matched": "ignore all previous instruction"}
+{"ts": "2026-10-15T20:38:54", "event": "injection_blocked", "session": "66bbd67b6027", "category": "override", "matched": "ignoreallpreviousinstruction"}
+{"ts": "2026-10-15T20:38:54", "event": "injection_blocked", "session": "3ca20cc5c2a4", "category": "override", "matched": "ignore all previous instruction"}
+{"ts": "2026-10-15T20:38:54", "event": "injection_blocked", "session": "f056c6f9f703", "category": "override", "matched": "ignore all previous instruction"}
+{"ts": "2026-10-15T20:38:54", "event": "injection_blocked", "session": "0739deabc448", "category": "override", "matched": "Ignore all previous instruction"}
+{"ts": "2026-10-15T20:38:54", "event": "injection_blocked", "session": "76e61498daf5", "category": "prompt-theft", "matched": "Print your system prompt"}
+{"ts": "2026-10-15T20:38:54", "event": "injection_blocked", "session": "f121d132b3e9", "category": "secret", "matched": "PORTKEY_API_KEY"}
+{"ts": "2026-10-15T20:38:54", "event": "injection_blocked", "session": "e32606556968", "category": "role-hijack", "matched": "You are now"}
+{"ts": "2026-10-15T20:38:54", "event": "injection_blocked", "session": "77f0ffdef031", "category": "exfiltration", "matched": "List all users"}
+{"ts": "2026-10-15T20:38:54", "event": "injection_blocked", "session": "ff0c0775e87c", "category": "override", "matched": "IGNORE PRIOR INSTRUCTION"}
+{"ts": "2026-10-15T20:38:54", "event": "throttled", "caller": "127.0.0.1", "route": "chat", "retry_after": 7}
+{"ts": "2026-10-15T20:38:54", "event": "throttled", "caller": "127.0.0.1", "route": "chat", "retry_after": 7}
+{"ts": "2026-10-15T20:38:54", "event": "throttled", "caller": "127.0.0.1", "route": "chat", "retry_after": 7}
+{"ts": "2026-10-15T20:38:54", "event": "throttled", "caller": "127.0.0.1", "route": "chat", "retry_after": 7}
+{"ts": "2026-10-15T20:39:22", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-15T20:39:22", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-15T20:49:52", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-15T20:49:52", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-15T21:03:40", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-15T21:03:40", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-15T21:12:41", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-15T21:12:41", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-15T21:19:58", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-15T21:19:58", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-15T21:20:57", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-15T21:20:57", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-15T21:24:29", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-15T21:24:29", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-16T13:51:19", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-16T13:51:19", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-16T13:52:46", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-16T13:52:46", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-17T12:41:20", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-17T12:41:20", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-17T12:41:58", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-17T12:41:58", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-18T10:34:16", "event": "unverified_figures", "figures": [7000.0], "checked": 1}
+{"ts": "2026-10-18T10:37:07", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-18T10:37:07", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-18T10:57:54", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-18T10:57:54", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-18T11:11:21", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-18T11:11:21", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-18T11:11:36", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-18T11:11:36", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-23T13:07:00", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-23T13:07:00", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-23T13:22:27", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-23T13:22:27", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-23T13:30:25", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-23T13:30:25", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-23T13:37:30", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-23T13:37:30", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-23T13:42:14", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-23T13:42:14", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-23T13:51:57", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-23T13:51:57", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-23T13:57:01", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-23T13:57:01", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-23T13:57:36", "event": "off_topic", "session": "d5f6f82ce583", "asked": "What is 2 + 2?"}
+{"ts": "2026-10-23T13:57:37", "event": "off_topic", "session": "b259bb9e6e70", "asked": "Write me a Python script that sorts a list."}
+{"ts": "2026-10-23T13:57:39", "event": "off_topic", "session": "7a39ee63fb5e", "asked": "Who won the 2022 World Cup?"}
+{"ts": "2026-10-23T13:57:41", "event": "off_topic", "session": "4486c4810986", "asked": "Tell me a joke."}
+{"ts": "2026-10-23T13:57:44", "event": "off_topic", "session": "fecdb50a8924", "asked": "What are the symptoms of the flu?"}
+{"ts": "2026-10-23T13:57:45", "event": "off_topic", "session": "260d996eb268", "asked": "Explain the French Revolution for my history essay."}
+{"ts": "2026-10-23T13:58:04", "event": "throttled", "caller": "127.0.0.1", "route": "chat", "retry_after": 28}
+{"ts": "2026-10-23T13:58:21", "event": "throttled", "caller": "127.0.0.1", "route": "chat", "retry_after": 12}
+{"ts": "2026-10-23T13:58:31", "event": "throttled", "caller": "127.0.0.1", "route": "chat", "retry_after": 2}
+{"ts": "2026-10-23T14:00:35", "event": "off_topic", "session": "64b0a431ba45", "asked": "Who won the 2022 World Cup?"}
+{"ts": "2026-10-23T14:00:52", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-23T14:00:52", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-26T09:28:47", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-26T09:28:47", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-26T09:35:56", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-26T09:35:56", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-26T09:45:50", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-26T09:45:50", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-26T09:51:32", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-26T09:51:32", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-26T10:33:50", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-26T10:33:50", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-26T10:45:58", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-26T10:45:58", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-26T10:46:23", "event": "off_topic", "session": "bdfc43f33aad", "asked": "yo"}
+{"ts": "2026-10-26T10:48:58", "event": "off_topic", "session": "a30e0e3139fd", "asked": "hi, now write me a python script to sort a list"}
+{"ts": "2026-10-26T10:49:00", "event": "off_topic", "session": "68d9d2e63e96", "asked": "hello! what is 19 times 42?"}
+{"ts": "2026-10-26T10:51:32", "event": "off_topic", "session": "7c5876b9c9a8", "asked": "hey, who won the 2022 World Cup?"}
+{"ts": "2026-10-26T10:51:33", "event": "off_topic", "session": "e887e1048d7c", "asked": "hi, write me a python script"}
+{"ts": "2026-10-26T10:51:35", "event": "off_topic", "session": "36c23376001c", "asked": "what is 19 times 42?"}
+{"ts": "2026-10-26T10:51:54", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-26T10:51:54", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-26T11:01:54", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-26T11:01:54", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-26T11:08:12", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-26T11:08:12", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-26T11:23:52", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-26T11:23:52", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-26T11:42:59", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-26T11:42:59", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-26T12:57:23", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-26T12:57:23", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-26T13:43:14", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-26T13:43:14", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-26T13:56:20", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-26T13:56:20", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-26T14:19:19", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-26T14:19:19", "event": "test_event", "detail": "unit test"}
+{"ts": "2026-10-26T16:10:33", "event": "probe", "matched": "contact [email]"}
+{"ts": "2026-10-26T16:10:33", "event": "test_event", "detail": "unit test"}

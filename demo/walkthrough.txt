@@ -1,0 +1,55 @@
+Welcome to Tern. Traveler, not a tourist.
+
+Tern is a planning desk for people who would rather understand a place than tick it off. It keeps the map of where you have been, works out what that adds up to, and builds the next trip around it.
+
+The name is an Arctic tern. It makes the longest migration of any animal alive, pole to pole, about seventy thousand kilometres a year, chasing the light so it lives in near perpetual summer. It is not a bird that wanders. It goes a very long way, on purpose, and it knows exactly why it is going.
+
+Let us walk through the site.
+
+Start with My World. The Map is where you paint your travel history. Click any country and mark it visited, lived in, or want to go. Two hundred and forty nine countries and territories are on there, including the ones most maps leave off. Your pins are saved as you go. As a guest they live in this browser. Sign in and they follow your account instead.
+
+Next to it is Insights. This is what your map actually adds up to. It counts your countries against the United Nations list of one hundred and ninety five. It tells you what share of all human travel flows through the places you have been, using real arrivals figures from UN Tourism. And it names your rarest stop, the one fewest travellers reach.
+
+Every number here is counted, not estimated. There is no invented percentile telling you that you are in the top five percent of travellers. That figure was deleted on purpose, because it could not be justified.
+
+Insights also estimates the carbon your travel came to, and what it would take to neutralise it. The flights are grouped into realistic trips rather than assuming you flew home between every country, because the first version overstated the total by a factor of six.
+
+Now Discover. Four things live here.
+
+Where Next suggests countries off your usual path, drawn from your own want list rather than from a generic ranking.
+
+Getaways finds somewhere real to go this weekend. Pick a theme. Romantic, hiking, food, history, beach, nightlife, or family. The scout names the places people actually go to from where you live, trailhead towns for hiking, the ones couples book for a romantic weekend. Every name is checked against the map, so anything out of range or not findable is dropped before you see it. Click any transport option for the full detail, or press plan two days for an itinerary.
+
+National Parks has every national park in the United States and Canada. Sixty four American and forty nine Canadian, each with a photograph. On the right is Travellers' First Picks, five per country that most people would choose first. Click any park for what it is for, when to go, and how to get there from your home city.
+
+Heritage has the UNESCO World Heritage list. Over fifteen hundred sites across one hundred and seventy six countries. Pick a country and see what it is keeping. Click a site for a description, a photograph, and links to UNESCO's own listing, the Wikipedia article, and the map.
+
+Now Plan. This is the heart of it.
+
+Start by saying where you are setting out from. It defaults to your home city, but change it if the trip begins somewhere else. Someone can live in New York and be flying out of London, and the distances have to follow the trip, not the profile.
+
+Add your stops. Pick a country, then a city, and press add. Every city we hold is in that list, not just the big ones, so you can start in New Haven and stop in Évora. Add several for a multi stop trip, and the order is yours to set.
+
+There is a visa filter. Tick it and the country list reduces to the places your passport can enter with nothing arranged first. On an American passport that takes two hundred and forty eight countries down to one hundred and fifty two. Visa on arrival counts as free. An e-visa does not, because an e-visa is paperwork with a deadline, and filing it under no visa needed is how people miss flights.
+
+If you are an international student in the United States, there is a note about your documents. Your I-20 and its travel signature are what get you back in, not the visa stamp alone, and an expired signature is the usual way this goes wrong.
+
+Build the itinerary and you get the days, the cost guidance, and then the logistics.
+
+Getting there names the nearest airports for each flight leg and lists the other airports within driving range, because the closest airport is often not the one with a non stop. From New Haven that means Bradley, but also Kennedy, Newark and Boston. Every search is set to direct flights only.
+
+Where to stay and Reading up do the same for accommodation and guidebooks. And if you ask for a local guide, the itinerary tells you what kind to look for and what to ask before booking.
+
+Here is the important part. Tern holds no fares, no room rates and no flight schedules, and it will not invent them. It names what it actually knows, the airport, the distance, the visa rule, and hands the rest to the sites that hold live data, with the search already filled in.
+
+On the right is your trip list. Press the plus on anything in the itinerary and it goes on the list, tagged with the city it belongs to. Tick things off while you are travelling.
+
+Test Yourself is a geography quiz. Ten questions on capitals, flags and land borders. The wrong answers are drawn from the same part of the world as the right one, so nothing is guessable from the shape of the options alone.
+
+The Consultant is a travel adviser you can ask anything, as long as it is about travel. Ask it about the weather in Lisbon in March, whether you need a visa for Japan, or whether Georgia is getting touristy, and it will answer with a number where it has one. Ask it to write you a Python script and it will politely decline.
+
+And About explains why the site exists, and what it will not do.
+
+That is Tern. Every figure traces back to a published source, and where something is a judgement rather than a measurement, it says so.
+
+Thank you for watching.

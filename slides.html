@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Tern — AI Foundations</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css" />
+<style>
+:root{--amber:#FFAD36;--teal:#32D3BC;--violet:#A596FF;--dim:#A6ADBC;--faint:#808897;
+  --brand:linear-gradient(118deg,#FFAD36 0%,#FF6B6B 52%,#A596FF 100%);}
+.reveal{font-family:ui-sans-serif,-apple-system,"Segoe UI",Inter,Roboto,sans-serif;
+  font-size:30px}
+.reveal .slides section{text-align:left}
+.reveal h1{font-size:2.0em;font-weight:800;letter-spacing:-.025em;
+  background:var(--brand);-webkit-background-clip:text;background-clip:text;
+  color:transparent;text-transform:none}
+.reveal h2{font-size:1.25em;font-weight:700;text-transform:none;
+  letter-spacing:-.015em;color:#F4F6FA;margin-bottom:.5em}
+.reveal h2 small{display:block;font-size:.4em;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--amber);margin-bottom:.5em;font-weight:600}
+.reveal p,.reveal li{color:var(--dim);line-height:1.6}
+.reveal strong{color:#F4F6FA}
+.reveal em{color:var(--amber);font-style:normal}
+.reveal code{color:var(--teal);background:#FFFFFF0C;padding:2px 7px;border-radius:5px;
+  font-size:.85em}
+.tiles{display:flex;gap:18px;flex-wrap:wrap;margin:.7em 0}
+.tile{flex:1 1 150px;background:#15171F;border:1px solid #21242E;border-radius:12px;
+  padding:16px 18px}
+.tile b{display:block;font-size:1.5em;color:var(--amber);line-height:1}
+.tile.t b{color:var(--teal)}
+.tile span{font-size:.5em;color:var(--faint);letter-spacing:.06em;text-transform:uppercase}
+.reveal table{font-size:.62em;width:100%}
+.reveal table th{color:var(--faint);text-transform:uppercase;font-size:.78em;
+  letter-spacing:.1em;border-bottom:1px solid #2F3440}
+.reveal table td{color:var(--dim);border-bottom:1px solid #21242E;padding:8px 10px 8px 0}
+.reveal table td b{color:var(--amber);font-family:ui-monospace,Menlo,monospace}
+.lede{font-size:1.05em;color:#F4F6FA}
+.kicker{font-size:.62em;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.quote{border-left:3px solid var(--amber);padding-left:22px;font-style:italic;
+  color:#F4F6FA;font-size:.95em}
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<section data-background-color="#08090D">
+  <h1>Tern</h1>
+  <p class="lede">Traveler, not a tourist.<br />
+  A planning desk that refuses to invent numbers.</p>
+  <p class="kicker" style="margin-top:1.4em">Saad Alarifi · Yale SOM · AI Foundations · 26 Oct 2026</p>
+</section>
+
+<section data-background-color="#08090D">
+  <h2><small>The problem</small>Planning is fragmented</h2>
+  <p>The map of where you have been lives in one place. The visa rules in
+  another. The flights somewhere else again.</p>
+  <p>Nothing answers the question that matters:</p>
+  <p class="quote">Given everywhere I have already been, where should I go next
+  — and what will it take?</p>
+</section>
+
+<section data-background-color="#08090D">
+  <h2><small>The constraint</small>One rule shaped everything</h2>
+  <p class="lede">No number appears unless it traces to a published source.</p>
+  <p>Cheap to say. Expensive to keep. It deleted three features:</p>
+  <ul>
+    <li>a "top 5% of travellers" badge — <em>interpolated, indefensible</em></li>
+    <li>a price estimator — <em>needs a paid API</em></li>
+    <li>flight schedules — <em>same</em></li>
+  </ul>
+  <p class="quote">A plausible invented number is worse than no number. A missing
+  figure announces itself; a wrong one does not.</p>
+</section>
+
+<section data-background-color="#08090D">
+  <h2><small>Architecture</small>Measured, then designed</h2>
+  <div class="tiles">
+    <div class="tile"><b>0.05 ms</b><span>profile in Python</span></div>
+    <div class="tile"><b>30.6 s</b><span>same answer via agent</span></div>
+    <div class="tile t"><b>600,000×</b><span>difference</span></div>
+  </div>
+  <p><strong>Statistics are pure Python and instant. Agents only write prose.</strong></p>
+  <p>Prefetching what the agent would ask for anyway cut input
+  <em>5,492 → 3,700</em> tokens and tool calls <em>6 → 2</em>.</p>
+</section>
+
+<section data-background-color="#08090D">
+  <h2><small>Eight agents</small>Narrow briefs, structured output</h2>
+  <table>
+    <tr><th>Agent</th><th>Does</th></tr>
+    <tr><td>Profile Analyst</td><td>Reads the map, says what it means</td></tr>
+    <tr><td>Recommender</td><td>Ranks your want-list by impact</td></tr>
+    <tr><td>Trip Architect</td><td>Multi-stop itineraries, travel costed in</td></tr>
+    <tr><td>Consultant</td><td>Open chat — travel only</td></tr>
+    <tr><td>Getaway Finder / Scout</td><td>Weekends, shaped to a theme</td></tr>
+    <tr><td>Weekend Planner</td><td>Two days in one city</td></tr>
+    <tr><td>Park Guide</td><td>When to go, when not to</td></tr>
+  </table>
+  <p style="font-size:.72em">Every number in generated prose is re-checked against
+  tool output. Unverified figures are shown to the user.</p>
+</section>
+
+<section data-background-color="#08090D">
+  <h2><small>Tokenomics</small>54% of input served from cache</h2>
+  <div class="tiles">
+    <div class="tile"><b>188</b><span>runs logged</span></div>
+    <div class="tile"><b>528k</b><span>total tokens</span></div>
+    <div class="tile t"><b>54%</b><span>cached</span></div>
+    <div class="tile t"><b>~12k</b><span>per session</span></div>
+  </div>
+  <p>Stable system prompts cache; only the user block is new.</p>
+  <p>Every figure a user sees — 33 countries, 55.42% of travel flow, 22.48 t of
+  carbon — cost <strong>zero tokens</strong>. Only the prose was bought.</p>
+</section>
+
+<section data-background-color="#08090D">
+  <h2><small>Safety</small>Three risks, three defences</h2>
+  <ul>
+    <li><strong>Injection</strong> — 14 patterns, checked raw, normalised,
+    squashed and base64-decoded. Blocked <em>before</em> the model: zero tokens.</li>
+    <li><strong>Output to DOM</strong> — a real XSS found in review: model text
+    into <code>innerHTML</code> at 17 sites, could have stolen a session token.</li>
+    <li><strong>Runaway cost</strong> — daily, session and per-minute ceilings.
+    The throttle fired in live testing.</li>
+  </ul>
+  <div class="tiles">
+    <div class="tile t"><b>10/10</b><span>attacks blocked</span></div>
+    <div class="tile t"><b>4</b><span>obfuscated</span></div>
+    <div class="tile t"><b>0</b><span>false positives</span></div>
+  </div>
+</section>
+
+<section data-background-color="#08090D">
+  <h2><small>Evidence</small>What the tests caught</h2>
+  <table>
+    <tr><th>Error</th><th>Had it shipped</th></tr>
+    <tr><td>Japan scored off 2020</td><td>2.6% shown as 0.3%</td></tr>
+    <tr><td>Park area in hectares</td><td>Yellowstone 100× too large</td></tr>
+    <tr><td>One flight per country</td><td>Carbon overstated 6×</td></tr>
+    <tr><td>Distances from centroids</td><td>London–Paris as 934 km</td></tr>
+    <tr><td>E-visa as "no visa needed"</td><td>Travellers without papers</td></tr>
+  </table>
+  <p style="font-size:.74em">Three times a test failed and the <em>code</em> was
+  right. The model wrote the failing tests as confidently as the passing ones.</p>
+</section>
+
+<section data-background-color="#08090D">
+  <h2><small>Limits</small>Said plainly</h2>
+  <ul>
+    <li><strong>No prices, fares or schedules.</strong> It names the airports and
+    hands off to sites that hold live data.</li>
+    <li><strong>No external user test.</strong> Flagged 14 Oct, never closed.
+    Everything in Impact is author testing and source validation.</li>
+    <li><strong>UNESCO runs ~15% over official</strong> — stated on the page.</li>
+    <li><strong>The verdict threshold is a guess</strong> — 40% was never tuned.</li>
+  </ul>
+</section>
+
+<section data-background-color="#08090D">
+  <h2><small>What I would tell you</small>Three things</h2>
+  <p><strong>Measure before you architect.</strong> The two-tier design was a
+  timing result, not an instinct.</p>
+  <p><strong>Your tests are code too.</strong> They can be confidently wrong.</p>
+  <p><strong>A rule that costs you features is the one doing work.</strong></p>
+  <p class="kicker" style="margin-top:1.6em">Tern · Founded 2026 · New Haven</p>
+</section>
+
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script>Reveal.initialize({hash:true,slideNumber:'c/t',transition:'fade',
+  width:1180,height:720,margin:0.07});</script>
+</body>
+</html>

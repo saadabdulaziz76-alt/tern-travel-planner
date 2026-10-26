@@ -1,0 +1,11 @@
+# Agents. OpenAIResponsesModel is required: the luna models reject function
+# tools on /v1/chat/completions.
+pydantic-ai-slim[openai]>=2.0.0
+openai>=1.40.0
+
+# API for the front end
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+
+# finds .env in this folder or the parent, which is where the graders put theirs
+python-dotenv>=1.0.1
